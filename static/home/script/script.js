@@ -245,6 +245,8 @@ window.addEventListener('load', (event) => {
 
     function updateLike(e) {
         e.preventDefault();
+        let likeLabel = this;
+        let postId = this.id.toString().split('-')[1]
         $.ajax({
             beforeSend: function (xhr, settings) {
                 if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
@@ -253,25 +255,23 @@ window.addEventListener('load', (event) => {
             },
             type: 'POST',
             data: {
-                'comment': this.comment.value,
-                'post': form,
+                'postId': postId
             },
 
-            url: this.getAttribute('data-url'),
+            url: 'create-post/like-post',
             dataType: 'json',
             success: function (data) {
-                loadComments(e, true);
-                inputField.value = "";
-                inputField.blur();
+                if (data['update'] === true) {
+                    likeLabel.style.color = 'blue';
+                } else {
+                    likeLabel.style.color = 'black';
+                }
+                let likeNumberLabelId = 'like-number-' + postId;
+                let likeNumberLabel = document.getElementById(likeNumberLabelId)
+                likeNumberLabel.innerHTML = data['likes'] + " like this post";
+
             }
         });
-
-
-        if (this.style.color === 'black') {
-            this.style.color = 'blue';
-        } else {
-            this.style.color = 'black';
-        }
     }
 
     function updateLikeNumber() {

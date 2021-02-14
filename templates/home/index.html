@@ -129,13 +129,17 @@
                     </div>
                     <div class="post-stats">
                         <div class="stats-display">
-                            <h5>{{ post.like_num }} likes this post</h5>
+
+                            <a href="" id="like-number-{{ post.id }}" data-toggle="modal"
+                                data-target="#likesModel">{{ post.like_num }} likes this post</a>
+
                             <h5 class="display-comments" id="comment-{{ post.id }}"
                                 data-url="{% url 'posts:more_comments' %}">{{ post.comment_num }} comments</h5>
                         </div>
                         <div class="stats-option">
                             <div class="like-option">
-                                <h5 id="like-{{ post.id }}" class="like-buttons"><i class="far fa-thumbs-up"></i> <span>Like</span></h5>
+                                <h5 id="like-{{ post.id }}" class="like-buttons"><i class="far fa-thumbs-up"></i> <span>Like</span>
+                                </h5>
                             </div>
                             <div class="comment-option">
                                 <h5 class="display-comments"><i class="far fa-comment"></i> <span>Comment</span></h5>
@@ -162,6 +166,30 @@
                             </form>
                         </div>
                     </div>
+
+                    <div id="likesModel" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Some text in the modal.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
                 {% endfor %}
 
                 </div>

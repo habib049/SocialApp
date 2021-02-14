@@ -1,8 +1,9 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect
-from .serializers import CommentSerializer
 from rest_framework.generics import ListAPIView
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
+from .serializers import CommentSerializer
 from django.views.generic import CreateView
 from .forms import PostForm, PostWithImages
 from .models import Post, PostImage, Comment, PostLike
@@ -78,10 +79,17 @@ def post_reply_comment(request):
 def update_post_like(request):
     if request.method == 'POST' and request.is_ajax():
         post_id = request.POST['postId']
-        like_entry = PostLike.objects.get(post_id=post_id, user=request.user)
-        if like_entry.exists():
-            print("it already exists")
-        else:
-            print("it doesn't exists")
+        try:
+            like_entry = PostLike.objects.get(post_id=post_id, user=request.user)
             post = Post.objects.get(id=post_id)
-
+            post.like_num -= 1
+            post.save()
+            like_entry.delete()
+            return JsonResponse({'update': False, 'likes': post.like_num})
+        except ObjectDoesNotExist:
+            post = Post.objects.get(id=post_id)
+            like_entry = PostLike.objects.create(post=post, user=request.user)
+            post.like_num += 1
+            post.save()
+            like_entry.save()
+            return JsonResponse({'update': True, 'likes': post.like_num})
