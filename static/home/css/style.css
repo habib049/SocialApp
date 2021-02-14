@@ -1,0 +1,246 @@
+*:focus{
+    outline: none;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-custom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    padding-left: 2rem;
+}
+
+.logo a span {
+    font-weight: 500;
+}
+
+.nav-right-items {
+    width: 280px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
+
+.search-icon {
+    height: 40px;
+
+}
+
+.search-col {
+    width: 400px;
+    margin-top: 0.5rem;
+}
+
+/*styling main section*/
+.main-section {
+    display: flex;
+}
+
+.left {
+    width: 30%;
+}
+
+.center {
+    width: 40%;
+}
+
+.right {
+    width: 30%;
+}
+
+/*post styling*/
+.post {
+    padding: 1rem;
+    margin-top: 3rem;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+.post-info {
+    display: flex;
+}
+
+.user-image img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    margin-left: 1rem;
+}
+
+.date-time h5 {
+    margin-top: -5px;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.post-title {
+    margin-top: 1rem;
+
+}
+
+
+.post-image {
+    width: 100%;
+    height: 400px;
+}
+
+.stats-option, .stats-display {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.stats-display h5 {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.display-comments:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.stats-option {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    transition: 0.2s;
+}
+
+.stats-option div {
+    width: 50%;
+    padding: 0.3rem 0.5rem 0.1rem 0.5rem;
+    transition: 0.2s;
+}
+
+.stats-option div:hover {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.stats-option div h5 {
+    text-align: center;
+}
+
+/*more comments styling*/
+.more-comment-link {
+    margin-bottom: 1rem;
+}
+
+.more-comment-link a {
+    text-decoration: none;
+    transition: 0.1s;
+    color: black;
+}
+
+.more-comment-link a:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.1s;
+}
+
+/*styling comment*/
+.post-new-comment {
+    display: flex;
+}
+
+.comment-input-field {
+    width: 540px;
+    margin: 2px 20px;
+}
+
+.new-comment-input {
+    border-radius: 30px;
+}
+
+#reply-comment {
+    color: blue;
+    margin-left: 4rem;
+}
+
+/*post image carousle*/
+.carousel-controls {
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.carousel-indicators {
+    position: relative !important;
+}
+
+.carousel-indicators li {
+    background-color: black !important;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+}
+
+.carousel-movers {
+    background-color: black;
+    color: #fff;
+}
+
+/*comments styling */
+.comments-display {
+    margin-top: 1rem;
+}
+
+
+.main-comment-section {
+    display: flex;
+}
+
+.comment-content-user-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.8rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 0.1rem 0.5rem;
+}
+
+.comment-content p {
+    margin: 0;
+    padding: 0;
+}
+
+.user-comment-image img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+
+.comment-controls {
+    margin-left: 3.2rem;
+    font-size: 14px;
+}
+
+.reply-comment-section {
+    margin-left: 1.8rem;
+    width: 200px;
+    display: none;
+}
+
+.reply-comment-input {
+    background-color: transparent;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    width: 200px;
+    position: relative;
+    top: -0.8rem;
+    margin-bottom: 0.5rem;
+}
+

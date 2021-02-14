@@ -1,0 +1,21 @@
+{% extends 'base/bootstrap_template.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block css_section %}
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+{% endblock %}
+
+{% block main_body %}
+    <div class="container app">
+    <div class="heading">
+        <h3>Create New Post</h3>
+    </div>
+        <div class="d-flex justify-content-center">
+            <form method="post" id="post-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy}}
+                <input type="submit" value="Post" class="btn btn-primary" id="submit-button">
+            </form>
+        </div>
+    </div>
+{% endblock %}

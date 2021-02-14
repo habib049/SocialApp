@@ -1,0 +1,24 @@
+{% extends 'base/bootstrap_template.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+{% block css_section %}
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+{% endblock %}
+
+{% block main_body %}
+    <div class="container app">
+    <div class="heading">
+        <h3>Sign up</h3>
+        <p>It is quick and easy</p>
+    </div>
+        <div class="d-flex justify-content-center">
+            <form method="post" id="registration-form">
+                {% csrf_token %}
+                {{ form|crispy}}
+                <input type="submit" name="Register" class="btn btn-primary" id="submit-button">
+            </form>
+        </div>
+    </div>
+{% endblock %}
