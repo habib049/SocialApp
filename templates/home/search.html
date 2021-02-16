@@ -1,0 +1,108 @@
+{% extends 'base/bootstrap_template.html' %}
+
+{% load static %}
+{% block css_section %}
+    <link rel="stylesheet" href="{% static 'home/css/search_css.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/navbar_css.css' %}">
+{% endblock %}
+
+{% block main_body %}
+    <div class="application">
+        {% include 'home/navbar.html' %}
+
+        <div class="main-section">
+            <div class="left">
+                <div class="search-query">
+                    <h5>Search Results for</h5>
+                    <p>{{ query }}</p>
+                </div>
+            </div>
+            <div class="center infinite-container">
+                {% if user_list %}
+                    {% for u in user_list %}
+                        <div class="user-display infinite-item">
+                            <div class="user-image">
+                                <img src="{{ u.user_profile.profile_image.url }}" alt="">
+                            </div>
+                            <div class="user-info">
+                                <div class="username">
+                                    <h6>{{ u.first_name }} {{ u.last_name }}</h6>
+                                </div>
+                                {% if u.user_profile.city %}
+                                    <div class="user-location">
+                                        <h6>Lives in {{ u.user_profile.city }}, {{ u.user_profile.country }}</h6>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if post_list %}
+                    {% for post in post_list %}
+                        <div class="post-display">
+
+                            <div class="post-info">
+                                <div class="user-image">
+                                    <img src="{{ post.user.user_profile.profile_image.url }}" alt="image">
+                                </div>
+                                <div class="info ">
+                                    <div class="username">
+                                        <h5>{{ post.user.username }}</h5>
+                                    </div>
+                                    <div class="date-time">
+                                        <h5>{{ post.add_time }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-title">
+                                <h5>{{ post.title }}</h5>
+                            </div>
+
+                            <div class="post-stats">
+                                <div class="stats-display">
+
+                                    <p class="like-number-display">{{ post.like_num }} likes this post</p>
+
+                                    <h5 class="display-comments">{{ post.comment_num }} comments</h5>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="loading" style="display: none;">
+                    Loading...
+                </div>
+
+                {% if page_obj.has_next %}
+                    <a class="infinite-more-link"
+                       href="/search/?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+
+            </div>
+            <div class="right">
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block script_section %}
+
+    <script src="{% static 'home/script/noframework.waypoints.min.js' %}"></script>
+    <script src="{% static 'home/script/infinite.min.js' %}"></script>
+
+    <script src="{% static 'home/script/search.js' %}"></script>
+    <script src="{% static 'home/script/navbar_script.js' %}"></script>
+
+
+
+{% endblock %}
+
+

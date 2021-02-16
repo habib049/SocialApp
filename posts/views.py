@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from rest_framework.generics import ListAPIView
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
-from .serializers import CommentSerializer
+from .serializers import CommentSerializer, LikeListSerializer
 from django.views.generic import CreateView
 from .forms import PostForm, PostWithImages
 from .models import Post, PostImage, Comment, PostLike
@@ -39,15 +39,22 @@ class PostCreateView(CreateView):
 class CommentList(ListAPIView):
     serializer_class = CommentSerializer
 
-    def get_queryset(self):
-        return Comment.objects.filter()
-
     def list(self, request, *args, **kwargs):
         post_id = request.GET['post_id']
         post_id = str(post_id).split('-')[-1]
         queryset = Comment.objects.filter(post_id=post_id, comment_level=0)
         serializer = self.get_serializer(queryset, many=True)
         return JsonResponse({'comments': serializer.data})
+
+
+class LikeUserList(ListAPIView):
+    serializer_class = LikeListSerializer
+
+    def list(self, request, *args, **kwargs):
+        post_id = request.GET['postId']
+        queryset = PostLike.objects.filter(post_id=post_id)
+        serializer = self.get_serializer(queryset, many=True)
+        return JsonResponse({'users': serializer.data})
 
 
 def post_new_comment(request):
@@ -93,3 +100,5 @@ def update_post_like(request):
             post.save()
             like_entry.save()
             return JsonResponse({'update': True, 'likes': post.like_num})
+
+

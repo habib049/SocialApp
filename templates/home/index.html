@@ -5,223 +5,195 @@
 {% load posts_tags %}
 {% block css_section %}
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/navbar_css.css' %}">
 {% endblock %}
 
 {% block main_body %}
-    <div class="dsfsdf">
-        <div class="bar-section">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-                <div class="logo">
-                    <a class="navbar-brand" href="#"><i class="fas fa-hashtag"></i> <span>Socially</span></a>
-                </div>
+    <div class="application">
+        {% include 'home/navbar.html' %}
 
-                <div class="col-auto search-col">
-                    <label class="sr-only" for="inlineFormInputGroup">Search friends</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search friends">
-                        <div class="input-group-append ">
-                            <div class="input-group-text search-icon"><i class="fas fa-search"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="navbar-nav " id="navbarNavAltMarkup">
-                    <div class="navbar-nav nav-right-items">
-                        <a class="nav-item nav-link active" href="#"><i class="fas fa-home"></i> <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link" href="#"><i class="fas fa-user"></i></a>
-                        <a class="nav-item nav-link" href="#"><i class="fas fa-envelope"></i></a>
-                        <a class="nav-item nav-link" href="#"><i class="fas fa-bars"></i></a>
-                    </div>
-                </div>
-
-            </nav>
-        </div>
         <div class="main-section">
-
 
             <div class="left">
 
             </div>
-            <div class="center">
+            <div class="center infinite-container">
                 {% for post in posts %}
-                    <div class="post">
-                    <div class="post-info">
-                        <div class="user-image">
-                            <img src="{{ post.user.user_profile.profile_image.url }}" alt="image">
-                        </div>
-                        <div class="info ">
-                            <div class="username">
-                                <h5>{{ post.user.username }}</h5>
+                    <div class="post infinite-item">
+                        <div class="post-info">
+                            <div class="user-image">
+                                <img src="{{ post.user.user_profile.profile_image.url }}" alt="image">
                             </div>
-                            <div class="date-time">
-                                <h5>{{ post.add_time }}</h5>
+                            <div class="info ">
+                                <div class="username">
+                                    <h5>{{ post.user.username }}</h5>
+                                </div>
+                                <div class="date-time">
+                                    <h5>{{ post.add_time }}</h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="post-title">
-                        <h5>{{ post.title }}</h5>
-                    </div>
-                    <div class="post-content">
-                        <div class="content">
-
+                        <div class="post-title">
+                            <h5>{{ post.title }}</h5>
                         </div>
-                        <div class="post-image">
-                            {% if post.post_image %}
-                                {% if post.post_image.count == 1 %}
-                                    <img class="d-block w-100 post-image"
-                                         src="{{ post.post_image.first.image.url }}"
-                                         alt="image">
-                                {% else %}
+                        <div class="post-content">
+                            <div class="content">
 
-                                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            </div>
+                            <div class="post-image">
+                                {% if post.post_image %}
+                                    {% if post.post_image.count == 1 %}
+                                        <img class="d-block w-100 post-image"
+                                             src="{{ post.post_image.first.image.url }}"
+                                             alt="image">
+                                    {% else %}
 
-                                        <div class="carousel-inner">
+                                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-                                            {% for img in post.post_image.all %}
-                                                {% if forloop.counter == 1 %}
-                                                    <div class="carousel-item active">
-                                                        <img class="d-block w-100 post-image"
-                                                             src="{{ img.image.url }}"
-                                                             alt="image">
-                                                    </div>
-                                                {% else %}
-                                                    <div class="carousel-item ">
-                                                        <img class="d-block w-100 post-image"
-                                                             src="{{ img.image.url }}"
-                                                             alt="image">
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
+                                            <div class="carousel-inner">
 
-                                        </div>
+                                                {% for img in post.post_image.all %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <div class="carousel-item active">
+                                                            <img class="d-block w-100 post-image"
+                                                                 src="{{ img.image.url }}"
+                                                                 alt="image">
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="carousel-item ">
+                                                            <img class="d-block w-100 post-image"
+                                                                 src="{{ img.image.url }}"
+                                                                 alt="image">
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
 
-                                        <a class="carousel-control-prev " href="#myCarousel"
-                                           role="button" data-slide="prev">
+                                            </div>
+
+                                            <a class="carousel-control-prev " href="#myCarousel"
+                                               role="button" data-slide="prev">
                                                 <span class="carousel-control-prev-icon carousel-movers"
                                                       aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
 
-                                        <a class="carousel-control-next" href="#myCarousel"
-                                           role="button" data-slide="next">
+                                            <a class="carousel-control-next" href="#myCarousel"
+                                               role="button" data-slide="next">
                                                 <span class="carousel-control-next-icon carousel-movers"
                                                       aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
+                                                <span class="sr-only">Next</span>
+                                            </a>
 
-                                        <ol class="carousel-indicators">
-                                            {% for img in post.post_image.all %}
-                                                {% if forloop.counter == 1 %}
-                                                    <li data-target="#myCarousel" data-slide-to="1"
-                                                        class="active"></li>
-                                                {% else %}
-                                                    <li data-target="#myCarousel"
-                                                        data-slide-to={{ forloop.counter }}></li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ol>
+                                            <ol class="carousel-indicators">
+                                                {% for img in post.post_image.all %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <li data-target="#myCarousel" data-slide-to="1"
+                                                            class="active"></li>
+                                                    {% else %}
+                                                        <li data-target="#myCarousel"
+                                                            data-slide-to={{ forloop.counter }}></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ol>
 
 
-                                    </div>
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="stats-display">
-
-                            <a href="" id="like-number-{{ post.id }}" data-toggle="modal"
-                                data-target="#likesModel">{{ post.like_num }} likes this post</a>
-
-                            <h5 class="display-comments" id="comment-{{ post.id }}"
-                                data-url="{% url 'posts:more_comments' %}">{{ post.comment_num }} comments</h5>
-                        </div>
-                        <div class="stats-option">
-                            <div class="like-option">
-                                <h5 id="like-{{ post.id }}" class="like-buttons"><i class="far fa-thumbs-up"></i> <span>Like</span>
-                                </h5>
-                            </div>
-                            <div class="comment-option">
-                                <h5 class="display-comments"><i class="far fa-comment"></i> <span>Comment</span></h5>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="post-comments">
-                        <div class="comments-display">
-                        </div>
-                        <div class="post-new-comment">
-                            <div class="user-image">
-                                <img src="{{ user.user_profile.profile_image.url }}" alt="image">
+                        <div class="post-stats">
+                            <div class="stats-display">
+
+                                <a href="" class="like-number-display" id="like-number-{{ post.id }}"
+                                   data-toggle="modal"
+                                   data-target="#likesModel">{{ post.like_num }} likes this post</a>
+
+                                <h5 class="display-comments" id="comment-{{ post.id }}"
+                                    data-url="{% url 'posts:more_comments' %}">{{ post.comment_num }} comments</h5>
                             </div>
-                            <form method="post" data-url="{% url 'posts:post_new_comment' %}" class="comment-form"
-                                  id="{{ post.id }}">
-                                {% csrf_token %}
-                                <div class="input-field comment-input-field">
-                                    <div class="input-group">
-                                        <input type="text" name="comment" class="form-control new-comment-input"
-                                               placeholder="Write a comment">
+                            <div class="stats-option">
+                                <div class="like-option">
+                                    <h5 id="like-{{ post.id }}" class="like-buttons"><i class="far fa-thumbs-up"></i>
+                                        <span>Like</span>
+                                    </h5>
+                                </div>
+                                <div class="comment-option">
+                                    <h5 class="display-comments"><i class="far fa-comment"></i> <span>Comment</span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="post-comments">
+                            <div class="comments-display">
+                            </div>
+                            <div class="post-new-comment">
+                                <div class="user-image">
+                                    <img src="{{ user.user_profile.profile_image.url }}" alt="image">
+                                </div>
+                                <form method="post" data-url="{% url 'posts:post_new_comment' %}" class="comment-form"
+                                      id="{{ post.id }}">
+                                    {% csrf_token %}
+                                    <div class="input-field comment-input-field">
+                                        <div class="input-group">
+                                            <input type="text" name="comment" class="form-control new-comment-input"
+                                                   placeholder="Write a comment">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="modal-{{ post.id }}" class="modal fade" role="dialog"
+                             data-url="{% url 'posts:post_like_users' %}">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">People who like this post</h5>
+                                    </div>
+                                    <div class="modal-body" id="modal-content-{{ post.id }}">
+
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
 
-                    <div id="likesModel" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modal Header</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Some text in the modal.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
                             </div>
-
                         </div>
                     </div>
-
-
-
-
                 {% endfor %}
-
+                <div class="loading" style="display: none;">
+                    Loading...
                 </div>
-                <div class="right">
-
-                </div>
+                {% if page_obj.has_next %}
+                    <a class="infinite-more-link"
+                       href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
             </div>
+            <div class="right">
 
+            </div>
         </div>
+
     </div>
-
-
+    </div>
 
     <a href="{% url 'accounts:user_logout' %}">Logout</a>
     <a href="{% url 'posts:create_post' %}">create post</a>
     <a href="{% url 'profile:update_profile' %}">Edit profile</a>
 
 
-    {% for post in posts %}
-        <p>{{ post.title }}</p>
-        <p>{{ post.sub_title }}</p>
-        <p>{{ post.add_time }}</p>
-        <p>{{ post.comment_num }}</p>
-        <p>{{ post.like_num }}</p>
-    {% endfor %}
-
-
-
 {% endblock %}
 
 {% block script_section %}
+
+    <script src="{% static 'home/script/noframework.waypoints.min.js' %}"></script>
+    <script src="{% static 'home/script/infinite.min.js' %}"></script>
+
     <script src="{% static 'home/script/script.js' %}"></script>
+    <script src="{% static 'home/script/navbar_script.js' %}"></script>
 {% endblock %}
 
 

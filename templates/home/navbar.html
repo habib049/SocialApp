@@ -1,0 +1,89 @@
+<div class="bar-section">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+        <div class="logo">
+            <a class="navbar-brand" href="#"><i class="fas fa-hashtag"></i> <span>Socially</span></a>
+        </div>
+
+        <div class="col-auto search-col">
+            <label class="sr-only" for="searchProfilesInput">Search friends</label>
+
+            <form method="GET" id="search-from" action="{% url 'search:top_search_result' %}">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="searchProfilesInput"
+                           placeholder="Search friends" name="q">
+                    <div class="input-group-append ">
+                        <div class="input-group-text search-icon"><i class="fas fa-search"></i></div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="navbar-nav " id="navbarNavAltMarkup">
+            <div class="navbar-nav nav-right-items">
+                <a class="nav-item nav-link active" href="#"><i class="fas fa-home"></i> <span
+                        class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#"><i class="fas fa-user"></i></a>
+                <a class="nav-item nav-link" href="#"><i class="fas fa-envelope"></i></a>
+                <a class="nav-item nav-link not-clickable" id="user-options"><i class="fas fa-bars"></i></a>
+
+
+                <div class="dropdown not-clickable" id="dropdown-options">
+                    <a href="">
+                        <div class="user-profile">
+                            <div class="image-section">
+                                <img src="{{ user.user_profile.profile_image.url }}">
+                            </div>
+                            <div class="info-section">
+                                <div class="username-section">
+                                    <a>{{ user.username }}</a>
+                                </div>
+                                <div class="info-label-section">
+                                    <p>See your profile</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="seperator"></div>
+
+
+                    <a href="" id="dark-mode-button">
+                        <div class="color-section list-item">
+                            <div class="icon">
+                                <i class="fas fa-adjust"></i>
+                            </div>
+                            <div class="label">
+                                <h6>Dark Mode</h6>
+                            </div>
+                        </div>
+                    </a>
+
+
+                    <a href="">
+                        <div class="settings-section list-item">
+                            <div class="icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="label">
+                                <h6>Settings & Privacy</h6>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'accounts:user_logout' %}">
+                        <div class="logout-section list-item">
+                            <div class="icon">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                            <div class="label">
+                                <h6>Logout</h6>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</div>

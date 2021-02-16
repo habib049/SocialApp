@@ -1,0 +1,79 @@
+.navbar-custom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    padding-left: 2rem;
+}
+
+.logo a span {
+    font-weight: 500;
+}
+
+.nav-right-items {
+    width: 280px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
+
+.search-icon {
+    height: 40px;
+}
+
+.search-col {
+    width: 400px;
+    margin-top: 0.5rem;
+}
+
+#dropdown-options{
+    background-color: #eaeaea;
+    display: none;
+    position: absolute;
+    top: 4rem;
+    right: 2rem;
+}
+#dropdown-list li{
+    list-style: none;
+    margin-left: -1rem;
+    padding: 1rem;
+}
+.user-profile{
+    width: 300px;
+    padding: 1rem;
+    display: flex;
+}
+.image-section img{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+.info-section{
+    display: flex;
+    margin-left: 1rem;
+    flex-direction: column;
+}
+.username-section a{
+    text-decoration: none;
+    font-size: 20px;
+}
+.seperator{
+    height: 3px;
+    width: 100%;
+    background-color: #fff;
+    margin-top: -0.6rem;
+}
+.list-item{
+    display: flex;
+    padding: 1rem;
+}
+.list-item i{
+    font-size: 22px;
+}
+.list-item .label{
+    margin-left: 1rem;
+}
+.settings-section .label{
+    margin-left: 0.7rem;
+}

@@ -20,8 +20,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
     path('', include('home.urls')),
     path('create-post/',include('posts.urls')),
-    path('update-profile',include('profiles.urls'))
+    path('update-profile',include('profiles.urls')),
+    path('search/',include('search.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

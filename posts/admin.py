@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import  Post, PostImage,Comment
+from .models import Post, PostImage, Comment, PostLike
 
 
+admin.site.register(PostLike)
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['content', 'add_time','comment_level']
+    list_display = ['content', 'add_time', 'comment_level']
 
 
 @admin.register(Post)

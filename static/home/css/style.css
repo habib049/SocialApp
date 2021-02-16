@@ -1,4 +1,4 @@
-*:focus{
+*:focus {
     outline: none;
 }
 
@@ -7,35 +7,7 @@
     flex-direction: column;
 }
 
-.navbar-custom {
-    display: flex;
-    justify-content: space-between;
-}
 
-.logo {
-    padding-left: 2rem;
-}
-
-.logo a span {
-    font-weight: 500;
-}
-
-.nav-right-items {
-    width: 280px;
-    display: flex;
-    justify-content: space-between;
-    margin-right: 2rem;
-}
-
-.search-icon {
-    height: 40px;
-
-}
-
-.search-col {
-    width: 400px;
-    margin-top: 0.5rem;
-}
 
 /*styling main section*/
 .main-section {
@@ -155,6 +127,8 @@
     display: flex;
 }
 
+
+
 .comment-input-field {
     width: 540px;
     margin: 2px 20px;
@@ -244,3 +218,17 @@
     margin-bottom: 0.5rem;
 }
 
+/*likes user posts*/
+.user-section {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.user-section .username {
+    margin: 0.5rem 0.8rem;
+}
+
+.user-section .username a {
+    text-decoration: none;
+    font-size: 20px;
+}

@@ -1,5 +1,20 @@
 window.addEventListener('load', (event) => {
 
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+
+        offset: 'bottom-in-view',
+
+        onBeforePageLoad: function () {
+            $('.loading').show();
+        },
+        onAfterPageLoad: function () {
+            $('.loading').hide();
+        }
+
+    });
+
+
     let carousel = $(".carousel");
     $(".carousel-control-prev").click(function (e) {
         e.preventDefault();
@@ -274,7 +289,44 @@ window.addEventListener('load', (event) => {
         });
     }
 
-    function updateLikeNumber() {
+    //adding event listeners to like numbers display yot shows who like this post
+    let likeLabels = document.getElementsByClassName('like-number-display')
+    for (let i = 0; i < likeLabels.length; i++) {
+        likeLabels[i].addEventListener('click', loadLikeUsers)
+    }
 
+    function loadLikeUsers(e) {
+        e.preventDefault();
+        let postId = this.id.toString().split('-')[2]
+        let modalContentId = "modal-content-" + postId;
+        let modalContent = document.getElementById(modalContentId)
+        $.ajax({
+            type: 'GET',
+            data: {
+                'postId': postId
+            },
+            url: '/create-post/post-like-users',
+            dataType: 'json',
+            success: function (data) {
+                let userData = data['users']
+                modalContent.innerHTML = "";
+                for (let i = 0; i < userData.length; i++) {
+                    modalContent.innerHTML += "<div class=\"user-section\">\n" +
+                        "                                        <div class=\"user-image\">\n" +
+                        "                                            <img src=\"" + userData[i].image_url + "\" alt=\"user image\">\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"username\">\n" +
+                        "                                            <a href=\"\">" + userData[i].username + "</a>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>";
+                }
+                let modalId = "modal-" + postId
+                console.log(modalId)
+                $('#' + modalId).modal('show');
+            },
+            error(e) {
+                console.log(e)
+            }
+        });
     }
 });
