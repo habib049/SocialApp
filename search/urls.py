@@ -5,6 +5,5 @@ from . import views
 app_name = 'search'
 
 urlpatterns = [
-    path('', views.TopList.as_view(), name="top_search_result"),
-    path('top', views.TopList.as_view(), name="top-search-query"),
+    path('', views.UserList.as_view(), name="user_search_result"),
 ]

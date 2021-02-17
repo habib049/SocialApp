@@ -4,9 +4,9 @@ from django.views.generic import ListView
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import JsonResponse
-from .models import Friend, Notification
+from .models import Friend
 from accounts.models import User
-from .serializers import NotificationSerializer
+from notifications.models import Notification
 
 
 class FriendList(ListView):
@@ -14,19 +14,24 @@ class FriendList(ListView):
     context_object_name = "friends"
 
 
-def send_request(request, username=None):
-    if username is not None:
-        friend_user = User.objects.get(username=username)
-        friend = Friend.objects.create(user=request.user, friend=friend_user)
-        notification = Notification.objects.create(type="friend", recipient=friend_user, actor=request.user,
-                                                   verb="sent you friend request")
+def send_request(request):
+    if request.method == 'POST' and request.is_ajax():
+        user_id = request.POST['userId']
+        receiver = User.objects.get(id=user_id)
+        friend = Friend.objects.create(user=request.user, friend=receiver)
+        friend.save()
+        notification = Notification.objects.create(type="friend", receiver=receiver, sender=request.user,
+                                                   note="sent you friend request")
+        notification.save()
+
         channel_layer = get_channel_layer()
-        channel = "notifications_{}".format(friend_user.username)
+
+        channel = "notifications_{}".format(receiver.username)
+
         async_to_sync(channel_layer.group_send)(
             channel, {
-                "type": "notify",  # method name
+                "type": "notifications.notify",  # method name
                 "command": "new_notification",
-                "notification": json.dumps(NotificationSerializer(notification).data)
             }
         )
         data = {
@@ -36,3 +41,26 @@ def send_request(request, username=None):
         return JsonResponse(data)
     else:
         pass
+
+
+def view(request):
+    if request.is_ajax():
+        user_id = request.POST['userId']
+        receiver = User.objects.get(id=user_id)
+
+        print("receiver is : ", receiver.username)
+        current_user = request.user
+
+        channel_layer = get_channel_layer()
+
+        data = "notification" + "...."
+
+        async_to_sync(channel_layer.group_send)(
+            str(receiver.username),  # Channel Name, Should always be string
+            {
+                "type": "notify",  # Custom Function written in the consumers.py
+                "text": data,
+            },
+        )
+
+    return JsonResponse({'res': 1})

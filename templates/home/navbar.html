@@ -1,13 +1,13 @@
 <div class="bar-section">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
         <div class="logo">
-            <a class="navbar-brand" href="#"><i class="fas fa-hashtag"></i> <span>Socially</span></a>
+            <a class="navbar-brand" href="{% url 'home:home' %}"><i class="fas fa-hashtag"></i> <span>Socially</span></a>
         </div>
 
         <div class="col-auto search-col">
             <label class="sr-only" for="searchProfilesInput">Search friends</label>
 
-            <form method="GET" id="search-from" action="{% url 'search:top_search_result' %}">
+            <form method="GET" id="search-from" action="{% url 'search:user_search_result' %}">
                 <div class="input-group mb-2">
                     <input type="text" class="form-control" id="searchProfilesInput"
                            placeholder="Search friends" name="q">
@@ -21,7 +21,7 @@
 
         <div class="navbar-nav " id="navbarNavAltMarkup">
             <div class="navbar-nav nav-right-items">
-                <a class="nav-item nav-link active" href="#"><i class="fas fa-home"></i> <span
+                <a class="nav-item nav-link active" href="{% url 'home:home' %}"><i class="fas fa-home"></i> <span
                         class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="#"><i class="fas fa-user"></i></a>
                 <a class="nav-item nav-link" href="#"><i class="fas fa-envelope"></i></a>

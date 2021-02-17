@@ -11,6 +11,7 @@ window.addEventListener('load', (event) => {
     });
 
     document.getElementById('dark-mode-button').addEventListener('click', (e) => {
+        e.preventDefault();
         document.body.style.filter = "invert(100%)";
     })
 });

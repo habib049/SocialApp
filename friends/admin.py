@@ -4,4 +4,5 @@ from .models import Friend
 
 @admin.register(Friend)
 class FriendAdmin(admin.ModelAdmin):
-    fields = ['user', 'friend', 'request_time']
+    list_display = ['user', 'friend','status']
+

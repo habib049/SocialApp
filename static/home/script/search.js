@@ -2,16 +2,10 @@ window.addEventListener('load', (event) => {
 
     var infinite = new Waypoint.Infinite({
         element: $('.infinite-container')[0],
-
-        offset: 'bottom-in-view',
-
-        onBeforePageLoad: function () {
-            $('.loading').show();
+        handler: function (direction) {
+            infinite.destroy();
         },
-        onAfterPageLoad: function () {
-            $('.loading').hide();
-        }
-
+        offset: 'bottom-in-view',
     });
 
 });

@@ -35,51 +35,23 @@
                                     </div>
                                 {% endif %}
                             </div>
+                            <div class="add-friend" id="user-{{ u.id }}">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
                         </div>
                     {% endfor %}
+
+                    <div class="loading" style="display: none;">
+                        Loading...
+                    </div>
+
+                    {% if page_obj.has_next %}
+                        <a class="infinite-more-link"
+                           href="/search/?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+
                 {% endif %}
-                {% if post_list %}
-                    {% for post in post_list %}
-                        <div class="post-display">
 
-                            <div class="post-info">
-                                <div class="user-image">
-                                    <img src="{{ post.user.user_profile.profile_image.url }}" alt="image">
-                                </div>
-                                <div class="info ">
-                                    <div class="username">
-                                        <h5>{{ post.user.username }}</h5>
-                                    </div>
-                                    <div class="date-time">
-                                        <h5>{{ post.add_time }}</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="post-title">
-                                <h5>{{ post.title }}</h5>
-                            </div>
-
-                            <div class="post-stats">
-                                <div class="stats-display">
-
-                                    <p class="like-number-display">{{ post.like_num }} likes this post</p>
-
-                                    <h5 class="display-comments">{{ post.comment_num }} comments</h5>
-                                </div>
-                            </div>
-
-                        </div>
-                    {% endfor %}
-                {% endif %}
-                <div class="loading" style="display: none;">
-                    Loading...
-                </div>
-
-                {% if page_obj.has_next %}
-                    <a class="infinite-more-link"
-                       href="/search/?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
 
             </div>
             <div class="right">
@@ -98,7 +70,9 @@
     <script src="{% static 'home/script/noframework.waypoints.min.js' %}"></script>
     <script src="{% static 'home/script/infinite.min.js' %}"></script>
 
+
     <script src="{% static 'home/script/search.js' %}"></script>
+
     <script src="{% static 'home/script/navbar_script.js' %}"></script>
 
 

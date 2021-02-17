@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'rest_framework',
     'channels',
     'crispy_forms',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'home',
     'profiles',
     'search',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -53,11 +55,24 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'socialApp.middleware.LoginRequiredMiddleware'
+    'socialApp.middleware.LoginRequiredMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
+INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',
+    # ...
+]
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: False if request.is_ajax() else True,
+}
 
 ROOT_URLCONF = 'socialApp.urls'
 
@@ -79,7 +94,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'socialApp.wsgi.application'
-ASGI_APPLICATION = "socialApp.routing.application"
+ASGI_APPLICATION = "socialApp.asgi.application"
 
 CHANNEL_LAYERS = {
     'default': {
@@ -94,15 +109,10 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = '/accounts/login'
 
-ADMIN_URLS = (
-    r'/admin/(.*)$',
-)
-
 LOGIN_EXEMPT_URLS = (
     r'admin/',
     r'^accounts/registration$',
 )
-
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
