@@ -1,7 +1,8 @@
 <div class="bar-section">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
         <div class="logo">
-            <a class="navbar-brand" href="{% url 'home:home' %}"><i class="fas fa-hashtag"></i> <span>Socially</span></a>
+            <a class="navbar-brand" href="{% url 'home:home' %}"><i class="fas fa-hashtag"></i>
+                <span>Socially</span></a>
         </div>
 
         <div class="col-auto search-col">
@@ -23,9 +24,11 @@
             <div class="navbar-nav nav-right-items">
                 <a class="nav-item nav-link active" href="{% url 'home:home' %}"><i class="fas fa-home"></i> <span
                         class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#"><i class="fas fa-user"></i></a>
+                <a class="nav-item nav-link" href="{% url 'friend:user_friends' %}"><i class="fas fa-user"></i></a>
                 <a class="nav-item nav-link" href="#"><i class="fas fa-envelope"></i></a>
+                <a class="nav-item nav-link" href="#"><i class="fas fa-bell"></i></a>
                 <a class="nav-item nav-link not-clickable" id="user-options"><i class="fas fa-bars"></i></a>
+
 
 
                 <div class="dropdown not-clickable" id="dropdown-options">

@@ -1,0 +1,26 @@
+.left {
+    padding: 1rem;
+}
+
+.sidebar-items {
+    background-color: #eeeeee;
+    width: 80%;
+    padding: 2rem;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+
+.sidebar-item:hover {
+    background-color: #f6f6f6;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.first-item {
+    border-top: 2px solid black;
+}
+
+.sidebar-item {
+    border-bottom: 2px solid black;
+    padding: 0.5rem 0 0.5rem;
+}

@@ -6,11 +6,15 @@
 {% block css_section %}
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'home/css/navbar_css.css' %}">
+    <link rel="stylesheet" href="{% static 'base/base_style.css' %}">
 {% endblock %}
 
 {% block main_body %}
     <div class="application">
         {% include 'home/navbar.html' %}
+
+        <div class="notification-wrapper" id="user-{{ user.username }}">
+        </div>
 
         <div class="main-section">
 
@@ -96,7 +100,6 @@
                                                 {% endfor %}
                                             </ol>
 
-
                                         </div>
                                     {% endif %}
                                 {% endif %}
@@ -173,36 +176,49 @@
                 {% endif %}
             </div>
             <div class="right">
-                <div class="friend-requests">
-                    <div class="friend-request">
-                        <div class="user-information">
-                            <div class="user-image">
-                                <div class="img"></div>
-                            </div>
-                            <div class="username">
-                                <a href=""></a>
-                            </div>
-                        </div>
-                        <div class="request-controls">
-                            <div class="request-control">
-                                <button>Accept</button>
-                            </div>
-                            <div class="request-control">
-                                <button>Reject</button>
-                            </div>
+                {% if friends %}
+                    <div class="friend-requests">
+                        <h5>Friend Requests</h5>
+                        <div class="friend-request-wrapper" id="friendRequestWrapper">
+                            {% for friend in friends %}
+                                <div class="friend-request">
+                                    <div class="user-section">
+                                        <div class="friend-user-image">
+                                            <img src="{{ friend.friend.user_profile.profile_image.url }}"
+                                                 alt="user image">
+                                        </div>
+                                    </div>
+                                    <div class="request-controls">
+                                        <div class="username-wrapper">
+                                            <div class="username">
+                                                <a href="">{{ friend.friend.username }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="control">
+                                            <div class="request-control" id="confirm-{{ friend.friend.username }}">
+                                                <button type="button" class="btn btn-success">Confirm</button>
+                                            </div>
+                                            <div class="request-control delete-request-button "
+                                                 id="delete-{{ friend.friend.username }}">
+                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
+                        {% if requested_count > 5 %}
+                            <a href="" class="btn">See All</a>
+                        {% endif %}
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
 
     </div>
     </div>
 
-    <a href="{% url 'accounts:user_logout' %}">Logout</a>
-    <a href="{% url 'posts:create_post' %}">create post</a>
-    <a href="{% url 'profile:update_profile' %}">Edit profile</a>
 
 
 {% endblock %}

@@ -1,66 +1,93 @@
-from django.shortcuts import render
-import json
 from django.views.generic import ListView
+from rest_framework.generics import ListAPIView
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import JsonResponse
 from .models import Friend
 from accounts.models import User
 from notifications.models import Notification
+from .pagination import FriendListPagination
+from .serializers import UserSerializer
 
 
 class FriendList(ListView):
     model = Friend
     context_object_name = "friends"
+    template_name = 'home/friends.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        return Friend.objects.filter(user=self.request.user, status="friend")
+
+    def get_context_data(self, **kwargs):
+        context = super(FriendList, self).get_context_data(**kwargs)
+        requested = Friend.objects.filter(user=self.request.user, status="requested").count()
+        context['requested'] = requested
+        return context
 
 
-def send_request(request):
+class FriendListApiView(ListAPIView):
+    pagination_class = FriendListPagination
+
+    def get_queryset(self):
+        return Friend.objects.filter(user=self.request.user, status="friend")
+
+    def list(self, request):
+        queryset = self.get_queryset()
+
+        page = self.paginate_queryset(queryset)
+        response_list = self.get_paginated_response(page)
+        print(response_list)
+        serializer = UserSerializer(response_list, many=True)
+        requested = Friend.objects.filter(user=self.request.user, status="requested").count()
+        return JsonResponse({'friends': serializer.data, 'requested': requested})
+
+
+class RequestedListApiView(ListAPIView):
+    pagination_class = FriendListPagination
+
+    def get_queryset(self):
+        return Friend.objects.filter(user=self.request.user, status="requested")
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = UserSerializer(queryset, many=True)
+        # append serializer's data with some additional value
+        response_list = serializer.data
+        return JsonResponse({'friends': response_list})
+
+
+def send_friend_request(request):
     if request.method == 'POST' and request.is_ajax():
         user_id = request.POST['userId']
         receiver = User.objects.get(id=user_id)
-        friend = Friend.objects.create(user=request.user, friend=receiver)
-        friend.save()
-        notification = Notification.objects.create(type="friend", receiver=receiver, sender=request.user,
-                                                   note="sent you friend request")
-        notification.save()
+        sender = request.user
+        message_note = "sends you a friend request"
+        notification_type = "friend"
 
-        channel_layer = get_channel_layer()
+        if not Notification.objects.filter(sender=sender, receiver=receiver, type=notification_type).exists():
+            # notification = Notification.objects.create(type=notification_type, sender=sender, receiver=receiver,
+            #                                            note=message_note)
+            # notification.save()
 
-        channel = "notifications_{}".format(receiver.username)
-
-        async_to_sync(channel_layer.group_send)(
-            channel, {
-                "type": "notifications.notify",  # method name
-                "command": "new_notification",
+            # notify user in real time
+            data = {
+                'sender': sender.username,
+                'receiver': receiver.username,
+                'imageUrl': sender.user_profile.profile_image.url,
+                'message': message_note
             }
-        )
-        data = {
-            'status': True,
-            'message': "Request sent.",
-        }
-        return JsonResponse(data)
-    else:
-        pass
 
+            channel_layer = get_channel_layer()
 
-def view(request):
-    if request.is_ajax():
-        user_id = request.POST['userId']
-        receiver = User.objects.get(id=user_id)
+            async_to_sync(channel_layer.group_send)(
+                str(receiver.username),
+                {
+                    "type": "notify",
+                    "text": data,
+                },
+            )
 
-        print("receiver is : ", receiver.username)
-        current_user = request.user
+            return JsonResponse({'notify': True})
 
-        channel_layer = get_channel_layer()
-
-        data = "notification" + "...."
-
-        async_to_sync(channel_layer.group_send)(
-            str(receiver.username),  # Channel Name, Should always be string
-            {
-                "type": "notify",  # Custom Function written in the consumers.py
-                "text": data,
-            },
-        )
-
-    return JsonResponse({'res': 1})
+        return JsonResponse({'notify': False})

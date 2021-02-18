@@ -1,0 +1,28 @@
+.notification-wrapper {
+    width: 25%;
+    z-index: 1000000;
+    position: absolute;
+    right: 0;
+}
+
+#user-notification {
+    display: flex;
+}
+
+.user-info-section {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.user-info-section .username {
+    margin-top: 0.1rem;
+}
+
+.user-info-section .message {
+    margin-top: -0.3rem;
+}
+
+.close-section {
+    margin-left: 3rem;
+}

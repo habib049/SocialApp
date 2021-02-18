@@ -6,41 +6,49 @@
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'home/css/navbar_css.css' %}">
     <link rel="stylesheet" href="{% static 'base/base_style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/friend.css' %}">
+
 {% endblock %}
 
 {% block main_body %}
     <div class="application">
         {% include 'home/navbar.html' %}
 
-        <div class="notification-wrapper" id="user-{{ user.username }}" >
+        <div class="notification-wrapper" id="user-{{ user.username }}">
+
         </div>
 
         <div class="main-section">
             <div class="left">
-                <div class="search-query">
-                    <h5>Search Results for</h5>
-                    <p>{{ query }}</p>
-                </div>
+{#                <div class="sidebar-items">#}
+{#                    <div class="sidebar-item first-item" id="friend-list">#}
+{#                        <h5>Friends</h5>#}
+{#                    </div>#}
+{#                    <div class="sidebar-item" id="requested-friends">#}
+{#                        <h5>Friend Requests ({{ requested }})</h5>#}
+{#                    </div>#}
+{#                </div>#}
             </div>
-            <div class="center infinite-container">
-                {% if user_list %}
-                    {% for u in user_list %}
+            <div class="center infinite-container" >
+                {% if friends %}
+                    {% for friend in friends %}
                         <div class="user-display infinite-item">
                             <div class="user-image">
-                                <img src="{{ u.user_profile.profile_image.url }}" alt="">
+                                <img src="{{ friend.friend.user_profile.profile_image.url }}" alt="">
                             </div>
                             <div class="user-info">
                                 <div class="username">
-                                    <h6>{{ u.first_name }} {{ u.last_name }}</h6>
+                                    <h6>{{ friend.friend.first_name }} {{ friend.friend.last_name }}</h6>
                                 </div>
                                 {% if u.user_profile.city %}
                                     <div class="user-location">
-                                        <h6>Lives in {{ u.user_profile.city }}, {{ u.user_profile.country }}</h6>
+                                        <h6>Lives
+                                            in {{ friend.friend.user_profile.city }}, {{ friend.friend.user_profile.country }}</h6>
                                     </div>
                                 {% endif %}
                             </div>
-                            <div class="add-friend" id="user-{{ u.id }}">
-                                <i class="fas fa-user-plus"></i>
+                            <div class="message-friend" id="user-{{ friend.id }}">
+                                <i class="far fa-comments"></i>
                             </div>
                         </div>
                     {% endfor %}
@@ -51,8 +59,9 @@
 
                     {% if page_obj.has_next %}
                         <a class="infinite-more-link"
-                           href="/search/?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
+                           href="/friend/?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
                     {% endif %}
+
                 {% endif %}
             </div>
             <div class="right">
@@ -62,19 +71,16 @@
     </div>
 
 
-
-
 {% endblock %}
 
 {% block script_section %}
 
     <script src="{% static 'home/script/noframework.waypoints.min.js' %}"></script>
     <script src="{% static 'home/script/infinite.min.js' %}"></script>
-
-
     <script src="{% static 'home/script/waypoint.js' %}"></script>
-
     <script src="{% static 'home/script/navbar_script.js' %}"></script>
+
+     <script src="{% static 'home/script/friend.js' %}"></script>
 
 
 

@@ -7,6 +7,10 @@ from .serializers import UserListSerializer
 from django.db.models import Q
 from django.views.generic import UpdateView
 from accounts.models import User
+from friends.consumers import NotificationConsumer
+
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 
 
 class ProfileUpdateView(UpdateView):
@@ -35,6 +39,3 @@ class SearchUserList(ListAPIView):
         serialize_tmeplate = serializers.serialize('json', html)
         serializer = self.get_serializer(queryset, many=True)
         return JsonResponse({'users': serializer.data})
-
-
-

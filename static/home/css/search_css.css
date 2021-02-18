@@ -5,9 +5,11 @@
     border-radius: 10px;
     margin-top: 1rem;
 }
-.search-query{
+
+.search-query {
     padding: 2rem;
 }
+
 .user-info {
     display: flex;
     flex-direction: column;
@@ -21,7 +23,8 @@
 .user-location h6 {
     font-weight: 400;
 }
-.add-friend{
+
+.add-friend, .message-friend {
     border-radius: 50%;
     background-color: #fff;
     padding: 1rem;
@@ -30,10 +33,12 @@
     left: 65%;
     transition: 0.1s;
 }
-.add-friend i{
+
+.add-friend i, .message-friend i {
     font-size: 20px;
 }
-.add-friend:hover{
+
+.add-friend:hover, .message-friend:hover {
     cursor: pointer;
     background-color: #faf6f6;
     transition: 0.1s;
