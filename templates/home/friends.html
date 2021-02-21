@@ -20,25 +20,33 @@
 
         <div class="main-section">
             <div class="left">
-{#                <div class="sidebar-items">#}
-{#                    <div class="sidebar-item first-item" id="friend-list">#}
-{#                        <h5>Friends</h5>#}
-{#                    </div>#}
-{#                    <div class="sidebar-item" id="requested-friends">#}
-{#                        <h5>Friend Requests ({{ requested }})</h5>#}
-{#                    </div>#}
-{#                </div>#}
+                {#                <div class="sidebar-items">#}
+                {#                    <div class="sidebar-item first-item" id="friend-list">#}
+                {#                        <h5>Friends</h5>#}
+                {#                    </div>#}
+                {#                    <div class="sidebar-item" id="requested-friends">#}
+                {#                        <h5>Friend Requests ({{ requested }})</h5>#}
+                {#                    </div>#}
+                {#                </div>#}
             </div>
-            <div class="center infinite-container" >
+            <div class="center infinite-container">
                 {% if friends %}
                     {% for friend in friends %}
                         <div class="user-display infinite-item">
                             <div class="user-image">
-                                <img src="{{ friend.friend.user_profile.profile_image.url }}" alt="">
+                                <a href="{% url 'profile:user_profile' friend.friend.slug %}">
+                                    <img src="{{ friend.friend.user_profile.profile_image.url }}" alt="">
+                                </a>
                             </div>
                             <div class="user-info">
                                 <div class="username">
-                                    <h6>{{ friend.friend.first_name }} {{ friend.friend.last_name }}</h6>
+                                    <a href="{% url 'profile:user_profile' friend.friend.slug %}">
+                                        {% if friend.friend.first_name %}
+                                            <h6>{{ friend.friend.first_name }} {{ friend.friend.last_name }}</h6>
+                                        {% else %}
+                                            <h6>{{ friend.friend.username }}</h6>
+                                        {% endif %}
+                                    </a>
                                 </div>
                                 {% if u.user_profile.city %}
                                     <div class="user-location">
@@ -80,7 +88,7 @@
     <script src="{% static 'home/script/waypoint.js' %}"></script>
     <script src="{% static 'home/script/navbar_script.js' %}"></script>
 
-     <script src="{% static 'home/script/friend.js' %}"></script>
+    <script src="{% static 'home/script/friend.js' %}"></script>
 
 
 

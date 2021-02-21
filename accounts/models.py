@@ -5,7 +5,7 @@ from django.template.defaultfilters import slugify
 
 
 class User(AbstractUser):
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True)
     gender = models.CharField(max_length=50, null=True, choices=[
         ('Male', 'Male'),
         ('Female', 'Female'),

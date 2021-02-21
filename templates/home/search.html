@@ -12,7 +12,7 @@
     <div class="application">
         {% include 'home/navbar.html' %}
 
-        <div class="notification-wrapper" id="user-{{ user.username }}" >
+        <div class="notification-wrapper" id="user-{{ user.username }}">
         </div>
 
         <div class="main-section">
@@ -27,11 +27,15 @@
                     {% for u in user_list %}
                         <div class="user-display infinite-item">
                             <div class="user-image">
-                                <img src="{{ u.user_profile.profile_image.url }}" alt="">
+                                <a href="{% url 'profile:user_profile' u.slug %}">
+                                    <img src="{{ u.user_profile.profile_image.url }}" alt="">
+                                </a>
                             </div>
                             <div class="user-info">
                                 <div class="username">
-                                    <h6>{{ u.first_name }} {{ u.last_name }}</h6>
+                                    <a href="{% url 'profile:user_profile' u.slug %}">
+                                        <h6>{{ u.first_name }} {{ u.last_name }}</h6>
+                                    </a>
                                 </div>
                                 {% if u.user_profile.city %}
                                     <div class="user-location">

@@ -7,7 +7,6 @@ from accounts.models import User
 from posts.models import Post
 from friends.models import Friend
 from friends.consumers import NotificationConsumer
-
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
@@ -52,8 +51,33 @@ class UserProfile(DetailView):
         mutual_friends = Friend.objects.filter(
             friend__username__in=my_friends
         ).values(
-            'friend__first_name', 'friend__last_name', 'friend__last_name','friend__user_profile__profile_image'
+            'friend__first_name', 'friend__last_name', 'friend__last_name', 'friend__user_profile__profile_image'
         )[:9]
         context['mutual_friends'] = mutual_friends
         context['posts'] = posts
+
+        # notify user
+        sender = self.request.user
+        receiver = User.objects.get(
+            slug=self.kwargs.get('slug')
+        )
+
+        data = {
+            'sender': sender.username,
+            'receiver': receiver.username,
+            'imageUrl': sender.user_profile.profile_image.url,
+            'message': "viewed your profile",
+            'type': 'profile'
+        }
+
+        channel_layer = get_channel_layer()
+
+        async_to_sync(channel_layer.group_send)(
+            str(receiver.username),
+            {
+                "type": "notify",
+                "text": data,
+            },
+        )
+
         return context

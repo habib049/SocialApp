@@ -30,18 +30,21 @@
                     {% endif %}
 
                 <div class="user-image">
-                    <img src="{{ notification.sender.user_profile.profile_image.url }}" alt="">
+                    <a href="{% url 'profile:user_profile' notification.sender.user.slug %}"><img
+                            src="{{ notification.sender.user_profile.profile_image.url }}" alt=""></a>
                 </div>
                 <div class="notification-information">
                     <div class="user-info">
                         <div class="username">
-                            {% if notification.sender.first_name %}
-                                <h6>{{ notification.sender.first_name }} {{ notification.sender.last_name }}
-                                    | {{ notification.time_stamp|timesince }} ago</h6>
-                            {% else %}
-                                <h6>{{ notification.sender.username }}
-                                    | {{ notification.time_stamp|timesince }} ago</h6>
-                            {% endif %}
+                            <a href="{% url 'profile:user_profile' notification.sender.user.slug %}">
+                                {% if notification.sender.first_name %}
+                                    <h6>{{ notification.sender.first_name }} {{ notification.sender.last_name }}
+                                        | {{ notification.time_stamp|timesince }} ago</h6>
+                                {% else %}
+                                    <h6>{{ notification.sender.username }}
+                                        | {{ notification.time_stamp|timesince }} ago</h6>
+                                {% endif %}
+                            </a>
                         </div>
                     </div>
                     <div class="notification-message" id="">
