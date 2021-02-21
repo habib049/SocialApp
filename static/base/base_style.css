@@ -7,6 +7,11 @@
 
 #user-notification {
     display: flex;
+    justify-content: space-between;
+}
+
+.notification-section {
+    display: flex;
 }
 
 .user-info-section {
@@ -24,5 +29,6 @@
 }
 
 .close-section {
-    margin-left: 3rem;
+    position: relative;
+    right: 0;
 }

@@ -2,11 +2,14 @@
     outline: none;
 }
 
+body, html {
+    overflow-x: hidden;
+}
+
 .app {
     display: flex;
     flex-direction: column;
 }
-
 
 
 /*styling main section*/
@@ -127,7 +130,6 @@
 }
 
 
-
 .comment-input-field {
     width: 480px;
     margin: 2px 20px;
@@ -233,13 +235,15 @@
 }
 
 /*right requests sections*/
-.right{
+.right {
     margin-top: 3rem;
 }
-.friend-requests h5{
-    margin-bottom:1rem ;
+
+.friend-requests h5 {
+    margin-bottom: 1rem;
 }
-.friend-requests{
+
+.friend-requests {
     background-color: #e9e9e9;
     width: 80%;
     margin-left: 3rem;
@@ -247,7 +251,7 @@
     border-radius: 10px;
 }
 
-.friend-request{
+.friend-request {
     display: flex;
     flex-direction: row;
     background-color: #ffffff;
@@ -256,30 +260,44 @@
     margin-top: 1rem;
 }
 
-.friend-user-image img{
+.friend-user-image img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     margin-left: -10px;
 }
-.request-controls{
+
+.request-controls {
     display: flex;
     flex-direction: column;
     margin-left: 1rem;
     margin-top: 0.7rem;
 }
-.request-control button{
-    padding:  0.2rem 1rem;
+
+.request-control button {
+    padding: 0.2rem 1rem;
 }
-.control{
+
+.control {
     display: flex;
     margin-top: 0.5rem;
 }
-.delete-request-button{
+
+.delete-request-button {
     margin-left: 1rem;
 }
 
-.request-control button:hover{
+.request-control button:hover {
     cursor: pointer;
     transition: 0.3s;
 }
+
+.more-requests-wrapper {
+    margin-top: 1rem;
+    align-items: center;
+}
+
+#more-requests-button {
+    width: 100%;
+}
+

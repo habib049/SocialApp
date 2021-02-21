@@ -18,6 +18,10 @@
     margin-right: 2rem;
 }
 
+.nav-right-items a i {
+    font-size: 20px;
+}
+
 .search-icon {
     height: 40px;
 }
@@ -27,53 +31,103 @@
     margin-top: 0.5rem;
 }
 
-#dropdown-options{
+#dropdown-options {
     background-color: #eaeaea;
     display: none;
     position: absolute;
     top: 4rem;
     right: 2rem;
 }
-#dropdown-list li{
+
+#dropdown-list li {
     list-style: none;
     margin-left: -1rem;
     padding: 1rem;
 }
-.user-profile{
+
+.user-profile {
     width: 300px;
     padding: 1rem;
     display: flex;
 }
-.image-section img{
+
+.image-section img {
     height: 60px;
     width: 60px;
     border-radius: 50%;
 }
-.info-section{
+
+.info-section {
     display: flex;
     margin-left: 1rem;
     flex-direction: column;
 }
-.username-section a{
+
+.username-section a {
     text-decoration: none;
     font-size: 20px;
 }
-.seperator{
+
+.seperator {
     height: 3px;
     width: 100%;
     background-color: #fff;
     margin-top: -0.6rem;
 }
-.list-item{
+
+.list-item {
     display: flex;
     padding: 1rem;
 }
-.list-item i{
+
+.list-item i {
     font-size: 22px;
 }
-.list-item .label{
+
+.list-item .label {
     margin-left: 1rem;
 }
-.settings-section .label{
+
+.settings-section .label {
     margin-left: 0.7rem;
+}
+
+#ex2 .fa-stack[data-count]:after {
+    position: absolute;
+    right: 0%;
+    top: 1%;
+    content: attr(data-count);
+    font-size: 30%;
+    padding: .6em;
+    border-radius: 999px;
+    line-height: .75em;
+    color: white;
+    background: rgba(255, 0, 0, 0.85);
+    text-align: center;
+    min-width: 2em;
+    font-weight: bold;
+}
+
+.notification-dot {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    right: 155px;
+}
+
+.badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    position: relative;
+    top: -15px;
+    left: -15px;
+    border-radius: 50%;
+    background-color: green;
+}
+#group{
+    margin-right: -1rem;
 }

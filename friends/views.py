@@ -17,7 +17,11 @@ class FriendList(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Friend.objects.filter(user=self.request.user, status="friend")
+        return Friend.objects.filter(
+            user=self.request.user, status="friend"
+        ).select_related(
+            'friend'
+        )
 
     def get_context_data(self, **kwargs):
         context = super(FriendList, self).get_context_data(**kwargs)
@@ -26,35 +30,17 @@ class FriendList(ListView):
         return context
 
 
-class FriendListApiView(ListAPIView):
-    pagination_class = FriendListPagination
+class RequestFriendList(ListView):
+    model = Friend
+    context_object_name = 'requested_friend'
+    paginate_by = 6
 
     def get_queryset(self):
-        return Friend.objects.filter(user=self.request.user, status="friend")
-
-    def list(self, request):
-        queryset = self.get_queryset()
-
-        page = self.paginate_queryset(queryset)
-        response_list = self.get_paginated_response(page)
-        print(response_list)
-        serializer = UserSerializer(response_list, many=True)
-        requested = Friend.objects.filter(user=self.request.user, status="requested").count()
-        return JsonResponse({'friends': serializer.data, 'requested': requested})
-
-
-class RequestedListApiView(ListAPIView):
-    pagination_class = FriendListPagination
-
-    def get_queryset(self):
-        return Friend.objects.filter(user=self.request.user, status="requested")
-
-    def list(self, request):
-        queryset = self.get_queryset()
-        serializer = UserSerializer(queryset, many=True)
-        # append serializer's data with some additional value
-        response_list = serializer.data
-        return JsonResponse({'friends': response_list})
+        return Friend.objects.filter(
+            user=self.request.user, status="requested"
+        ).select_related(
+            'friend'
+        )
 
 
 def send_friend_request(request):
@@ -75,7 +61,8 @@ def send_friend_request(request):
                 'sender': sender.username,
                 'receiver': receiver.username,
                 'imageUrl': sender.user_profile.profile_image.url,
-                'message': message_note
+                'message': message_note,
+                'type': 'friend'
             }
 
             channel_layer = get_channel_layer()
@@ -91,3 +78,43 @@ def send_friend_request(request):
             return JsonResponse({'notify': True})
 
         return JsonResponse({'notify': False})
+
+
+def accept_friend_request(request):
+    print('in functions')
+    if request.method == 'POST' and request.is_ajax():
+        username = request.POST['username']
+        receiver = User.objects.get(username=username)
+        sender = request.user
+        message_note = "accept your friend request"
+        notification_type = "friend accept"
+
+        # updating database
+        # friend = Friend.objects.get(user=sender, friend=receiver, status='requested')
+        # friend.status = 'friend'
+        # friend.save()
+        #
+        # notification = Notification.objects.create(type=notification_type, sender=sender, receiver=receiver,
+        #                                            note=message_note)
+        # notification.save()
+
+        # generating notification in realtime
+        data = {
+            'sender': sender.username,
+            'receiver': receiver.username,
+            'imageUrl': sender.user_profile.profile_image.url,
+            'message': message_note,
+            'type': 'friend'
+        }
+
+        channel_layer = get_channel_layer()
+
+        async_to_sync(channel_layer.group_send)(
+            str(receiver.username),
+            {
+                "type": "notify",
+                "text": data,
+            },
+        )
+
+        return JsonResponse({'notify': True})

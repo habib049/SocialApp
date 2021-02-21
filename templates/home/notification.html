@@ -1,0 +1,91 @@
+{% extends 'base/bootstrap_template.html' %}
+
+{% load static %}
+{% block css_section %}
+    <link rel="stylesheet" href="{% static 'home/css/search_css.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/navbar_css.css' %}">
+    <link rel="stylesheet" href="{% static 'base/base_style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/notification.css' %}">
+{% endblock %}
+
+{% block main_body %}
+    <div class="application">
+    {% include 'home/navbar.html' %}
+
+    <div class="notification-wrapper" id="user-{{ user.username }}">
+    </div>
+
+    <div class="main-section">
+        <div class="left">
+        </div>
+        <div class="center infinite-container">
+            {% if notifications %}
+                <h4>Notifications</h4>
+                {% for notification in notifications %}
+                    {% if forloop.counter < unseen %}
+                        <div class="notification-display infinite-item new-notifications">
+                    {% else %}
+                        <div class="notification-display infinite-item">
+                    {% endif %}
+
+                <div class="user-image">
+                    <img src="{{ notification.sender.user_profile.profile_image.url }}" alt="">
+                </div>
+                <div class="notification-information">
+                    <div class="user-info">
+                        <div class="username">
+                            {% if notification.sender.first_name %}
+                                <h6>{{ notification.sender.first_name }} {{ notification.sender.last_name }}
+                                    | {{ notification.time_stamp|timesince }} ago</h6>
+                            {% else %}
+                                <h6>{{ notification.sender.username }}
+                                    | {{ notification.time_stamp|timesince }} ago</h6>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="notification-message" id="">
+                        <p>{{ notification.note }}</p>
+                    </div>
+                </div>
+                </div>
+
+                {% endfor %}
+
+                <div class="loading" style="display: none;">
+                    Loading...
+                </div>
+
+                {% if page_obj.has_next %}
+                    <a class="infinite-more-link"
+                       href="/notification/?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            {% endif %}
+            </div>
+            <div class="right">
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block script_section %}
+
+    <script src="{% static 'home/script/noframework.waypoints.min.js' %}"></script>
+    <script src="{% static 'home/script/infinite.min.js' %}"></script>
+
+
+    <script src="{% static 'home/script/waypoint.js' %}"></script>
+
+    <script src="{% static 'home/script/navbar_script.js' %}"></script>
+
+    <script src="{% static 'home/script/notification_script.js' %}"></script>
+
+
+
+{% endblock %}
+
+

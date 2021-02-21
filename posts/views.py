@@ -1,3 +1,5 @@
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from rest_framework.generics import ListAPIView
@@ -99,6 +101,27 @@ def update_post_like(request):
             post.like_num += 1
             post.save()
             like_entry.save()
+
+            # notify user on like post
+            sender = request.user
+            receiver = post.user
+            message_note = 'likes your post'
+
+            data = {
+                'sender': sender.username,
+                'receiver': receiver.username,
+                'imageUrl': sender.user_profile.profile_image.url,
+                'message': message_note,
+                'type': 'like'
+            }
+
+            channel_layer = get_channel_layer()
+
+            async_to_sync(channel_layer.group_send)(
+                str(receiver.username),
+                {
+                    "type": "notify",
+                    "text": data,
+                },
+            )
             return JsonResponse({'update': True, 'likes': post.like_num})
-
-

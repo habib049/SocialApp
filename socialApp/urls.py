@@ -24,9 +24,10 @@ urlpatterns = [
                   path('accounts/', include('accounts.urls')),
                   path('', include('home.urls')),
                   path('create-post/', include('posts.urls')),
-                  path('update-profile/', include('profiles.urls')),
+                  path('profile/', include('profiles.urls')),
                   path('search/', include('search.urls')),
                   path('friend/', include('friends.urls')),
+                  path('notification/', include('notifications.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [path('^__debug__/', include(debug_toolbar.urls)), ]

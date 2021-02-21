@@ -4,6 +4,7 @@ from accounts.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    headline = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to='profile/', default='profile/default_profile.jpg')
     cover_image = models.ImageField(upload_to='cover/', default='cover/default_cover.jpg')
     date_of_birth = models.DateField(null=True, blank=True)

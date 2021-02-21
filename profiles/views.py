@@ -1,12 +1,11 @@
 from django.http import JsonResponse
-from django.shortcuts import render
-from django.core import serializers
-from django.template.loader import render_to_string
 from rest_framework.generics import ListAPIView
 from .serializers import UserListSerializer
-from django.db.models import Q
-from django.views.generic import UpdateView
+from django.db.models import Q, Subquery
+from django.views.generic import UpdateView, DetailView
 from accounts.models import User
+from posts.models import Post
+from friends.models import Friend
 from friends.consumers import NotificationConsumer
 
 from asgiref.sync import async_to_sync
@@ -23,19 +22,38 @@ class ProfileUpdateView(UpdateView):
         return self.request.user.user_profile
 
 
-class SearchUserList(ListAPIView):
-    serializer_class = UserListSerializer
+class UserProfile(DetailView):
+    model = User
+    context_object_name = 'profile'
+    template_name = 'home/user_profile.html'
 
-    def list(self, request, *args, **kwargs):
-        query = request.GET['query']
-        queryset = User.objects.filter(
-            Q(first_name__icontains=query) |
-            Q(last_name__icontains=query) |
-            Q(username__icontains=query)
+    def get_queryset(self):
+        query_set = User.objects.filter(
+            slug=self.kwargs.get('slug')
+        ).prefetch_related(
+            'user_profile', 'user_education'
         )
-        html = render_to_string('home/search.html', {'dishes': "dishes"})
-        print(html)
-        print("This is a type of ", type(html))
-        serialize_tmeplate = serializers.serialize('json', html)
-        serializer = self.get_serializer(queryset, many=True)
-        return JsonResponse({'users': serializer.data})
+        return query_set
+
+    def get_context_data(self, **kwargs):
+        context = super(UserProfile, self).get_context_data(**kwargs)
+        # getting posts
+        posts = Post.objects.filter(
+            user__slug=self.kwargs.get('slug')
+        ).prefetch_related(
+            'post_like', 'post_comment', 'post_image'
+        )
+
+        # getting mutual friends
+        my_friends = Subquery(Friend.objects.filter(
+            user=self.request.user
+        ).values('friend__username'))
+
+        mutual_friends = Friend.objects.filter(
+            friend__username__in=my_friends
+        ).values(
+            'friend__first_name', 'friend__last_name', 'friend__last_name','friend__user_profile__profile_image'
+        )[:9]
+        context['mutual_friends'] = mutual_friends
+        context['posts'] = posts
+        return context

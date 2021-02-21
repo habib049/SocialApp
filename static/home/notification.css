@@ -1,0 +1,22 @@
+
+
+.notification-display{
+    display: flex;
+    background-color: #eeeeee;
+    padding: 2rem 2rem 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+.new-notifications{
+    background-color: #e1e2ff;
+}
+
+.notification-information{
+    display: flex;
+    flex-direction: column;
+}
+.notification-message{
+    margin-left: 1rem;
+}
+
+

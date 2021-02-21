@@ -30,7 +30,8 @@
                             </div>
                             <div class="info ">
                                 <div class="username">
-                                    <h5>{{ post.user.username }}</h5>
+                                    <a href="{% url 'profile:user_profile' post.user.slug %}">
+                                        <h5>{{ post.user.username }}</h5></a>
                                 </div>
                                 <div class="date-time">
                                     <h5>{{ post.add_time }}</h5>
@@ -195,12 +196,15 @@
                                             </div>
                                         </div>
                                         <div class="control">
-                                            <div class="request-control" id="confirm-{{ friend.friend.username }}">
-                                                <button type="button" class="btn btn-success">Confirm</button>
+                                            <div class="request-control">
+                                                <button type="button" id="confirm-{{ friend.friend.username }}"
+                                                        class="btn btn-success confirm-request">Confirm
+                                                </button>
                                             </div>
-                                            <div class="request-control delete-request-button "
-                                                 id="delete-{{ friend.friend.username }}">
-                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            <div class="request-control delete-request-button ">
+                                                <button type="button" class="btn btn-danger delete-request"
+                                                        id="delete-{{ friend.friend.username }}">Delete
+                                                </button>
                                             </div>
                                         </div>
 
@@ -208,8 +212,10 @@
                                 </div>
                             {% endfor %}
                         </div>
-                        {% if requested_count > 5 %}
-                            <a href="" class="btn">See All</a>
+                        {% if requested_count > 3 %}
+                            <div class="more-requests-wrapper">
+                                <a href="" class="btn btn-primary" id="more-requests-button">See All</a>
+                            </div>
                         {% endif %}
                     </div>
                 {% endif %}

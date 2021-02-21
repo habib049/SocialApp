@@ -6,6 +6,17 @@ window.addEventListener('load', (event) => {
         addFriendButtons[i].addEventListener('click', sendFriendRequest)
     }
 
+    //adding event listeners to accept friend request
+    addEventListenersAcceptFriendRequest();
+
+    function addEventListenersAcceptFriendRequest() {
+        let acceptFriendButtons = document.getElementsByClassName('confirm-request');
+        for (let i = 0; i < acceptFriendButtons.length; i++) {
+            acceptFriendButtons[i].addEventListener('click', acceptFriendRequest)
+        }
+    }
+
+
     function sendFriendRequest(e) {
         alert("in function")
         e.preventDefault();
@@ -27,6 +38,29 @@ window.addEventListener('load', (event) => {
             }
         });
     }
+
+    function acceptFriendRequest(e) {
+        alert("in function")
+        e.preventDefault();
+        $.ajax({
+            beforeSend: function (xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            },
+            type: 'POST',
+            data: {
+                'username': this.id.toString().split('-')[1]
+            },
+
+            url: '/friend/accept-friend-request',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
 
     function getCookie(name) {
         let cookieValue = null;
@@ -57,10 +91,8 @@ window.addEventListener('load', (event) => {
     }
 
     friendRequestNotificationSocket.onmessage = (e) => {
-        console.log("this is event :", e)
         let data = JSON.parse(e.data);
-        console.log(data);
-        setNotification(data.sender, data.receiver, data.message, data.imageUrl)
+        setNotification(data.sender, data.receiver, data.message, data.imageUrl, data.type)
     }
 
     friendRequestNotificationSocket.onmessageerror = (e) => {
@@ -72,10 +104,10 @@ window.addEventListener('load', (event) => {
     }
     let receiverId = "";
 
-    function setNotification(sender, receiver, message, imageUrl) {
+    function setNotification(sender, receiver, message, imageUrl, type) {
         receiverId = "user-" + receiver;
         document.getElementById(receiverId).innerHTML = "<div class=\"alert alert-success alert-dismissable\" id=\"user-notification\">\n" +
-            "                <div class=\"user-image\">\n" +
+            "      <div class='notification-section'><div class=\"user-image\">\n" +
             "                    <img src=\"" + imageUrl + "\" alt=\"\">\n" +
             "                </div>\n" +
             "                <div class=\"user-info-section\">\n" +
@@ -85,7 +117,7 @@ window.addEventListener('load', (event) => {
             "                    <div class=\"message\">\n" +
             "                        <h6>" + message + "</h6>\n" +
             "                    </div>\n" +
-            "                </div>\n" +
+            "                </div></div>   \n" +
             "                <div class=\"close-section\" id=\"" + receiver + "-notification-close-button\">\n" +
             "                    <i class=\"fas fa-times\"></i>\n" +
             "                </div>\n" +
@@ -95,8 +127,11 @@ window.addEventListener('load', (event) => {
             $("#user-notification").alert("close");
             document.getElementById(receiverId).innerHTML = "";
         })
+
+        increaseNotificationNumber();
         setTimeout(dismissNotification, 3000);
-        loadNotification(sender, imageUrl);
+        if(type==='friend')
+            loadNotification(sender, imageUrl);
     }
 
     function dismissNotification() {
@@ -104,11 +139,19 @@ window.addEventListener('load', (event) => {
         document.getElementById(receiverId).innerHTML = "";
     }
 
-    // setTimeout(f, 3000)
-    //
-    // function f() {
-    //     loadNotification("receiver", '/media/profile/default_profile_j57EdVa.jpg');
-    // }
+
+    let numberElement = document.getElementById('notification-number');
+    console.log(numberElement)
+
+    function increaseNotificationNumber() {
+        let numberElement = document.getElementById('notification-number');
+        console.log(numberElement)
+        if (numberElement.innerHTML.length < 1) {
+            numberElement.innerHTML = "1";
+        } else {
+            numberElement.innerHTML = (parseInt(numberElement.innerHTML) + 1).toString();
+        }
+    }
 
     function loadNotification(sender, imageUrl) {
         if (window.location.href.toString().split('/').slice(3).length === 1) {
@@ -127,10 +170,10 @@ window.addEventListener('load', (event) => {
                 "                                    </div>\n" +
                 "                                    <div class=\"control\">\n" +
                 "                                        <div class=\"request-control\" id='confirm-" + sender + "'>\n" +
-                "                                            <button type=\"button\" class=\"btn btn-success\">Confirm</button>\n" +
+                "                                            <button type=\"button\" id='confirm-" + sender + "' class=\"btn btn-success confirm-request\">Confirm</button>\n" +
                 "                                        </div>\n" +
-                "                                        <div class=\"request-control delete-request-button\" id='delete-" + sender + "'>\n" +
-                "                                            <button type=\"button\" class=\"btn btn-danger\">Delete</button>\n" +
+                "                                        <div class=\"request-control delete-request-button\" >" +
+                "                                            <button type=\"button\" id='delete-" + sender + "' class=\"btn btn-danger delete-request\">Delete</button>\n" +
                 "                                        </div>\n" +
                 "                                    </div>\n" +
                 "\n" +
@@ -161,6 +204,7 @@ window.addEventListener('load', (event) => {
                     $(".friend-request:last").remove();
                 }
             }
+            addEventListenersAcceptFriendRequest();
         }
     }
 

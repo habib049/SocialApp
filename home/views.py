@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from posts.models import Post
 from accounts.models import User
 from friends.models import Friend
+from notifications.models import Notification
 
 
 def home_view(request):
@@ -20,9 +21,20 @@ class PostListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
-        friends = Friend.objects.filter(user=self.request.user, status="requested").select_related('user','friend')
+        friends = Friend.objects.filter(
+            user=self.request.user, status="requested"
+        ).select_related(
+            'user', 'friend'
+        )
         context['friends'] = friends[:5]
         context['requested_count'] = friends.count()
+
+        notifications = Notification.objects.filter(
+            receiver=self.request.user,
+            seen=False
+        ).count()
+        context['unseen_notifications'] = notifications
+
         return context
 
 
