@@ -1,12 +1,9 @@
-from django.http import JsonResponse
-from rest_framework.generics import ListAPIView
-from .serializers import UserListSerializer
 from django.db.models import Q, Subquery
 from django.views.generic import UpdateView, DetailView
 from accounts.models import User
 from posts.models import Post
 from friends.models import Friend
-from friends.consumers import NotificationConsumer
+from notifications.models import Notification
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
@@ -49,18 +46,26 @@ class UserProfile(DetailView):
         ).values('friend__username'))
 
         mutual_friends = Friend.objects.filter(
+            user__slug=self.kwargs.get('slug'),
             friend__username__in=my_friends
         ).values(
-            'friend__first_name', 'friend__last_name', 'friend__last_name', 'friend__user_profile__profile_image'
+            'friend__first_name', 'friend__last_name',
+            'friend__last_name', 'friend__user_profile__profile_image',
+            'friend__slug'
         )[:9]
+        context['requested_user_slug'] = self.kwargs.get('slug')
         context['mutual_friends'] = mutual_friends
         context['posts'] = posts
 
-        # notify user
+        # adding notification in database
         sender = self.request.user
         receiver = User.objects.get(
             slug=self.kwargs.get('slug')
         )
+
+        notification = Notification.objects.create(type="profile", sender=sender, receiver=receiver,
+                                                   note="viewed your profile")
+        notification.save()
 
         data = {
             'sender': sender.username,

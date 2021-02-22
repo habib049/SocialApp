@@ -1,3 +1,4 @@
+from django.db.models import Subquery
 from django.views.generic import ListView
 from rest_framework.generics import ListAPIView
 from asgiref.sync import async_to_sync
@@ -6,8 +7,6 @@ from django.http import JsonResponse
 from .models import Friend
 from accounts.models import User
 from notifications.models import Notification
-from .pagination import FriendListPagination
-from .serializers import UserSerializer
 
 
 class FriendList(ListView):
@@ -41,6 +40,32 @@ class RequestFriendList(ListView):
         ).select_related(
             'friend'
         )
+
+
+class MutualFriendList(ListView):
+    model = Friend
+    context_object_name = 'mutual_friend'
+    template_name = 'home/mutual_friends.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        # getting mutual friends
+        my_friends = Subquery(Friend.objects.filter(
+            user=self.request.user
+        ).values('friend__username'))
+
+        queryset = Friend.objects.filter(
+            user__slug=self.kwargs.get('slug'),
+            friend__username__in=my_friends
+        ).select_related(
+            'friend'
+        )
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(MutualFriendList, self).get_context_data(**kwargs)
+        context['query'] = self.kwargs.get('slug')
+        return context
 
 
 def send_friend_request(request):

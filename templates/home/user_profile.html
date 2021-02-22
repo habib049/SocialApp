@@ -59,18 +59,18 @@
                                                     <img src="/media/{{ mutual_friend.friend__user_profile__profile_image }}"
                                                          class="card-img-top" alt="...">
                                                     {% if mutual_friend.friend__first_name %}
-                                                        <a href="#"
+                                                        <a href="{% url 'profile:user_profile' mutual_friend.friend__slug %}"
                                                            class="mutual-friend-name">{{ mutual_friend.friend__first_name }} {{ mutual_friend.friend__last_name }}</a>
                                                     {% else %}
-                                                        <a href="#"
+                                                        <a href="{% url 'profile:user_profile' mutual_friend.friend__slug %}"
                                                            class="mutual-friend-name">{{ mutual_friend.friend__username }}</a>
-
                                                     {% endif %}
                                                 </div>
                                             </div>
                                         </div>
                                     {% endfor %}
-                                    <a href="" class="btn btn-primary see-all-mutual-friends-button"> See All</a>
+                                    <a href="{% url 'friend:mutual_friend_list' requested_user_slug %}"
+                                       class="btn btn-primary see-all-mutual-friends-button"> See All</a>
                                 </div>
                             </div>
                         </div>
