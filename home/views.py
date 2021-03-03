@@ -1,8 +1,6 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render
 from django.views.generic import ListView
-from django.urls import reverse_lazy
 from posts.models import Post
-from accounts.models import User
 from friends.models import Friend
 from notifications.models import Notification
 

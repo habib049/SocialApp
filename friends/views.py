@@ -1,6 +1,5 @@
 from django.db.models import Subquery
 from django.views.generic import ListView
-from rest_framework.generics import ListAPIView
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import JsonResponse

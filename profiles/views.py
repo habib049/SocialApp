@@ -1,4 +1,4 @@
-from django.db.models import Q, Subquery
+from django.db.models import Subquery
 from django.views.generic import UpdateView, DetailView
 from accounts.models import User
 from posts.models import Post

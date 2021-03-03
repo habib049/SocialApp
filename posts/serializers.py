@@ -12,6 +12,10 @@ class CommentSerializer(serializers.ModelSerializer):
     replies = RecursiveField(many=True, allow_null=True)
     username = serializers.SerializerMethodField()
     image_url = serializers.SerializerMethodField()
+    post_id = serializers.SerializerMethodField()
+
+    def get_post_id(self, obj):
+        return obj.post.id
 
     def get_username(self, obj):
         return obj.user.username

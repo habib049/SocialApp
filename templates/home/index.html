@@ -114,7 +114,7 @@
                                    data-toggle="modal"
                                    data-target="#likesModel">{{ post.like_num }} likes this post</a>
 
-                                <h5 class="display-comments" id="comment-{{ post.id }}"
+                                <h5 class="display-comments" id="comment-display1-{{ post.id }}"
                                     data-url="{% url 'posts:more_comments' %}">{{ post.comment_num }} comments</h5>
                             </div>
                             <div class="stats-option">
@@ -124,14 +124,14 @@
                                     </h5>
                                 </div>
                                 <div class="comment-option">
-                                    <h5 class="display-comments"><i class="far fa-comment"></i> <span>Comment</span>
+                                    <h5 class="display-comments" id="comment-display2-{{ post.id }}"><i class="far fa-comment"></i> <span>Comment</span>
                                     </h5>
                                 </div>
                             </div>
                         </div>
 
                         <div class="post-comments">
-                            <div class="comments-display">
+                            <div class="comments-display" id="comment-display-{{ post.id }}">
                             </div>
                             <div class="post-new-comment">
                                 <div class="user-image">

@@ -1,9 +1,6 @@
 import re
-
 from django.conf import settings
-from django.urls import reverse
 from django.shortcuts import redirect
-from django.contrib.auth import logout
 
 EXEMPT_URLS = [re.compile(settings.LOGIN_URL.lstrip('/'))]
 if hasattr(settings, 'LOGIN_EXEMPT_URLS'):

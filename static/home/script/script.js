@@ -31,20 +31,21 @@ window.addEventListener('load', (event) => {
 
     // comments processing
 
-    let commentsDisplay = document.getElementsByClassName('display-comments')[0];
-    let commentsDisplay1 = document.getElementsByClassName('display-comments')[1];
-    let loadCommentDisply = document.getElementsByClassName('comments-display')[0];
-    commentsDisplay.addEventListener('click', loadComments)
-    commentsDisplay1.addEventListener('click', loadComments)
+    let commentsDisplay = document.getElementsByClassName('display-comments');
+
+    for (let i = 0; i < commentsDisplay.length; i++) {
+        commentsDisplay[i].addEventListener('click', loadComments);
+    }
+
 
     function loadComments(e, updateCommentNumber = false) {
         e.preventDefault();
         $.ajax({
             type: 'GET',
             data: {
-                'post_id': commentsDisplay.id
+                'post_id': this.id.toString().split("-")[2]
             },
-            url: commentsDisplay.getAttribute('data-url'),
+            url: 'create-post/get-comments',
             dataType: 'json',
             success: function (data) {
                 let comments = data['comments'];
@@ -112,7 +113,8 @@ window.addEventListener('load', (event) => {
                         }
                     }
                 }
-                loadCommentDisply.innerHTML = commentDisplayData;
+                let commentDisplayId = "comment-display-" + commentObject.post_id;
+                document.getElementById(commentDisplayId).innerHTML = commentDisplayData;
 
                 if (updateCommentNumber)
                     updateCommentValue(commentsDisplay.id)
@@ -121,7 +123,7 @@ window.addEventListener('load', (event) => {
                 addListenersToReplyForms();
             },
             error: function (e) {
-                console.log("error occurred")
+                console.log(e)
             }
         });
     }
