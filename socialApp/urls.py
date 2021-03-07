@@ -28,6 +28,7 @@ urlpatterns = [
                   path('search/', include('search.urls')),
                   path('friend/', include('friends.urls')),
                   path('notification/', include('notifications.urls')),
+                  path('chat/', include('chat.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [path('^__debug__/', include(debug_toolbar.urls)), ]

@@ -1,0 +1,447 @@
+:root {
+    --black: #10171F;
+    --dark-blue: #2e2f3e;
+    --black-blue: #49495a;
+    --blue-hover: #494a5a;
+    --orange: #EBA54C;
+    --pink-red: #C1093F;
+    --white: #edefff;
+    --light-white: #c7cadb;
+    --sender-color: #e57500;
+    --receiver-color: #00598a;
+}
+
+.body, html {
+    overflow: hidden;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.application-wrapper {
+    background-color: var(--black);
+    height: 100vh;
+}
+
+.application {
+    margin: auto;
+    background-color: var(--dark-blue);
+    display: flex;
+    height: 97%;
+    border-radius: 10px;
+    padding: 0;
+}
+
+.left-section {
+    width: 30%;
+}
+
+.menubar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--blue-hover);
+    padding: 0.5rem 0.6rem;
+    border-top-left-radius: 10px;
+    color: var(--light-white);
+}
+
+.search-bar {
+    margin-top: 0.5rem;
+    border-bottom: 1px solid var(--light-white);
+}
+
+#searchInput {
+    border: none;
+    border-radius: 20px;
+    background-color: var(--blue-hover);
+    color: var(--light-white);
+}
+
+#searchInput::placeholder, #messageInput::placeholder {
+    color: var(--light-white);
+    opacity: 1;
+}
+
+#searchInput:-ms-input-placeholder, #messageInput:-ms-input-placeholder {
+    color: var(--light-white);
+}
+
+#searchInput::-ms-input-placeholder, #messageInput::-ms-input-placeholder {
+    color: var(--light-white);
+}
+
+.contact-section {
+    height: 83%;
+    overflow: auto;
+}
+
+.contact-section::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--black);
+}
+
+.contact-section::-webkit-scrollbar-thumb {
+    background-color: var(--light-white);
+}
+
+.contact {
+    display: flex;
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid var(--light-white);
+    transition: 0.1s;
+}
+
+
+.contact:hover {
+    cursor: pointer;
+    background-color: var(--blue-hover);
+    transition: 0.1s;
+}
+
+.new-message-contact {
+    background-color: #1d1d1d;
+}
+
+.new-message-contact .last-message-time-p, .new-message-contact .last-message {
+    color: orange;
+}
+
+
+.typing-information {
+    color: orange;
+}
+
+.user-profile-image {
+    width: 15%;
+}
+
+.user-profile-image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.right-information {
+    display: flex;
+    flex-direction: column;
+    width: 82%;
+    margin-left: 0.5rem;
+    color: vaR(--white);
+}
+
+.upper-information {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.username {
+    font-weight: 500;
+}
+
+.last-message, .last-message-time {
+    font-size: 14px;
+    color: var(--light-white);
+}
+
+.last-message p {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*styling right main chatting section  */
+
+.right-section {
+    width: 70%;
+}
+
+.chatting-section {
+    height: 100%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.user-profile-image {
+    display: flex;
+}
+
+.user-profile-image .username, .status {
+    margin-left: 0.5rem;
+}
+
+.status {
+    color: var(--sender-color);
+}
+
+/*.initial-screen {*/
+/*    !*display: none;*!*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.initial-screen i {*/
+/*    font-size: 250px;*/
+/*    color: var(--black-blue);*/
+/*}*/
+
+.chatting-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.chat-menubar {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 0;
+}
+
+.chatting-area-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 81%;
+}
+
+.chatting-area {
+    padding: 0 2rem;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.chatting-area::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--black);
+}
+
+.chatting-area::-webkit-scrollbar-thumb {
+    background-color: var(--light-white);
+}
+
+.received-message {
+    display: inline-block;
+    padding: 0 0 0 10px;
+    vertical-align: top;
+    width: 92%;
+}
+
+.received-message-content p {
+    background: var(--receiver-color) none repeat scroll 0 0;
+    border-radius: 3px;
+    color: var(--white);
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+}
+
+.time-date {
+    color: white;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+    float: right;
+}
+
+.received-message-content {
+    width: 50%;
+}
+
+.sent-message-content p {
+    background: var(--sender-color) none repeat scroll 0 0;
+    border-radius: 3px;
+    font-size: 14px;
+    margin: 0;
+    color: var(--white);
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+}
+
+.outgoing-message, .incoming-message {
+    overflow: hidden;
+    margin: 5px 0 5px;
+}
+
+
+.sent-message-content {
+    float: right;
+    width: 46%;
+}
+
+
+.chatting-bar {
+    background-color: var(--blue-hover);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-bottom-right-radius: 10px;
+}
+
+.message-input-wrapper {
+    width: 95%;
+    margin: auto;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#messageInput {
+    background-color: var(--dark-blue);
+    border: none;
+    border-radius: 20px;
+    height: 40px;
+    color: var(--light-white);
+    margin-top: 10px;
+}
+
+.deleted-message {
+    background-color: var(--dark-blue);
+}
+
+.close-icon-section {
+    color: var(--light-white);
+}
+
+.close-icon-section i:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.sender-reply-message {
+    border: 2px solid var(--sender-color);
+    border-left: 8px solid var(--sender-color);
+}
+
+.receiver-reply-message {
+    border: 2px solid var(--receiver-color);
+    border-left: 8px solid var(--receiver-color);
+}
+
+#replyMessageContent {
+    color: var(--light-white);
+    margin-top: 0.4rem;
+    font-weight: 400;
+    width: 500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.message-options {
+    float: right;
+    display: none;
+    transition: 1.5s;
+}
+
+.message-reply {
+    margin-right: 0.5rem;
+}
+
+.message-content:hover {
+    cursor: pointer;
+}
+
+.message-content:hover .message-options {
+    display: block;
+    transition: 1.5s;
+}
+
+.deleted-message-content {
+    background-color: var(--dark-blue);
+}
+
+
+/*styling ui of autocomplete*/
+.ui-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    z-index: 10000;
+    float: left;
+    display: none;
+    min-width: 160px;
+    padding: 4px 0;
+    margin: 0 0 10px 25px;
+    list-style: none;
+    background-color: var(--blue-hover);
+    border-radius: 5px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+}
+
+.ui-menu-item > a.ui-corner-all {
+    display: block;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--dark-blue);
+    clear: both;
+    font-weight: normal;
+    line-height: 18px;
+    color: var(--white);
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.ui-menu-item > a.ui-corner-all:hover {
+    cursor: pointer;
+    background-color: var(--dark-blue);
+}
+
+.ui-state-hover, .ui-state-active {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #0088cc;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    background-image: none;
+}
+
+.search-message-information{
+    display: flex;
+    justify-content: space-between;
+}
+.search-message-username {
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.search-message-content{
+    font-weight: 300;
+    text-transform: none;
+    color: var(--light-white);
+    margin-top: 3px;
+}
+.search-message-time{
+    font-size: 12px;
+}
+
+
+.ui-autocomplete::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--black);
+}
+
+.ui-autocomplete::-webkit-scrollbar-thumb {
+    background-color: var(--light-white);
+}
+
+.ui-state-highlight{
+    color: orange;
+    font-weight: 400;
+}

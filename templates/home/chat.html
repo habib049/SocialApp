@@ -1,0 +1,368 @@
+{% extends 'base/bootstrap_template.html' %}
+{% load static %}
+{% block css_section %}
+    <link rel="stylesheet" href="{% static 'chat/style.css' %}">
+{% endblock %}
+{% block main_body %}
+    <div class="application-wrapper row">
+        <div class="application col-lg-9 col-md-7">
+            <div class="left-section">
+                <div class="menubar">
+                    <div class="user-profile-image">
+                        <img src="\media\profile\default_profile.jpg" alt="user-profile"
+                             class="user-image" id="{{ user.username }}">
+                    </div>
+                    <div class="other-option">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+                <div class="notification-bar">
+                </div>
+                <div class="search-bar">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" id="searchInput"
+                               placeholder="Search" name="q">
+                    </div>
+                </div>
+                <div class="contact-section">
+                    {% for contact in contacts %}
+                        {% if user.username == contact.friend.username %}
+                            <div class="contact" id="conversion-{{ contact.user.username }}">
+                        {% else %}
+                            <div class="contact" id="conversion-{{ contact.friend.username }}">
+                        {% endif %}
+                    <div class="user-profile-image">
+                        <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                    </div>
+                    <div class="right-information">
+                        <div class="upper-information">
+                            <div class="username">
+                                {% if user.username == contact.friend.username %}
+                                    <p class="contact-username">{{ contact.user.username }}</p>
+                                {% else %}
+                                    <p class="contact-username">{{ contact.friend.username }}</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="last-message-time">
+                                {% if contact.messages.first.timestamp.date == now.date %}
+                                    <p class="last-message-time-p">{{ contact.messages.first.timestamp|time }}</p>
+                                {% else %}
+                                    <p class="last-message-time-p">{{ contact.messages.first.timestamp|date }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="last-message">
+                            {% if user.username == contact.friend.username %}
+                                <p id="information-{{ contact.user.username }}"
+                                >{{ contact.messages.first.content }}</p>
+                            {% else %}
+                                <p id="information-{{ contact.friend.username }}"
+                                >{{ contact.messages.first.content }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message jdsfds fbfoisd f dsoif dsfudspfj d</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="user-profile-image">
+                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                        </div>
+                        <div class="right-information">
+                            <div class="upper-information">
+                                <div class="username">
+                                    <p>Username</p>
+                                </div>
+                                <div class="last-message-time">
+                                    <p>yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="last-message">
+                                <p>This is last message</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+                <div class="right-section">
+                    <div class="info-bar-section">
+
+                    </div>
+                    <div class="chatting-section">
+                        <div class="chatting-wrapper ">
+                            <div class="menubar chat-menubar">
+                                <div class="user-profile-image">
+                                    <div class="user-image">
+                                        <img src="\media\profile\default_profile.jpg" alt="user-profile">
+
+                                    </div>
+                                    <div class="username-status-wrapper">
+                                        <div class="username">
+                                            <p id="chatMenuBarUsername">Username</p>
+                                        </div>
+                                        <div class="status">
+                                            <p id="user-status"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="other-option">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </div>
+                            </div>
+                            <div class="chatting-area-wrapper">
+                                <div class="chatting-area infinite-container" id="chattingArea">
+
+                                </div>
+                            </div>
+                            <div class="chatting-bar">
+                                <form id="messageInputForm">
+
+                                    <div class="input-group mb-2 message-input-wrapper">
+                                        <input type="text" class="form-control" id="messageInput"
+                                               placeholder="Type your message" name="message">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{% static 'chat/script.js' %}"></script>
+
+
+{% endblock %}

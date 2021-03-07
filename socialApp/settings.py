@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'search',
     'notifications',
     'profiles',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -55,12 +56,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'socialApp.middleware.LoginRequiredMiddleware',
-
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
@@ -102,6 +101,13 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             "hosts": [('127.0.0.1', 6379)],
         },
+    },
+}
+
+CACHES = {
+    'default': {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/0",
     },
 }
 
