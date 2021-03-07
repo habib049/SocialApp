@@ -6,5 +6,5 @@ app_name = 'search'
 urlpatterns = [
     # path('', views.UserList.as_view(), name="user_search_result"),
     path('<str:query>', views.search_user_profiles, name="ajax_search_result"),
-    path('temp/temp/<str:query>', views.check, name="check")
+    # path('temp/temp/<str:query>', views.check, name="check")
 ]
