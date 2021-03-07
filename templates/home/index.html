@@ -1,5 +1,4 @@
 {% extends 'base/bootstrap_template.html' %}
-
 {% load static %}
 {% load mathfilters %}
 {% load posts_tags %}
@@ -7,6 +6,7 @@
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'home/css/navbar_css.css' %}">
     <link rel="stylesheet" href="{% static 'base/base_style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/search_css.css' %}">
 {% endblock %}
 
 {% block main_body %}
@@ -21,6 +21,7 @@
             <div class="left">
 
             </div>
+            <button id="btn">this is button</button>
             <div class="center infinite-container">
                 {% for post in posts %}
                     <div class="post infinite-item">
@@ -124,7 +125,8 @@
                                     </h5>
                                 </div>
                                 <div class="comment-option">
-                                    <h5 class="display-comments" id="comment-display2-{{ post.id }}"><i class="far fa-comment"></i> <span>Comment</span>
+                                    <h5 class="display-comments" id="comment-display2-{{ post.id }}"><i
+                                            class="far fa-comment"></i> <span>Comment</span>
                                     </h5>
                                 </div>
                             </div>
@@ -231,11 +233,7 @@
 
 {% block script_section %}
 
-    <script src="{% static 'home/script/noframework.waypoints.min.js' %}"></script>
-    <script src="{% static 'home/script/infinite.min.js' %}"></script>
 
-    <script src="{% static 'home/script/script.js' %}"></script>
-    <script src="{% static 'home/script/navbar_script.js' %}"></script>
 {% endblock %}
 
 

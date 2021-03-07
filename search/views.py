@@ -1,5 +1,7 @@
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.template import loader, Context
 from django.template.loader import render_to_string
 from django.views.generic import ListView
 from rest_framework.generics import ListAPIView
@@ -32,8 +34,6 @@ class SearchUserList(ListAPIView):
     queryset = User.objects.all()
 
     def get_queryset(self):
-        print(self.request.query_params)
-
         query = self.request.query_params.get('q')
 
         return User.objects.filter(
@@ -50,15 +50,34 @@ class SearchUserList(ListAPIView):
         # append serializer's data with some additional value
         response_list = serializer.data
         # for changing the url
-        response_list.append({'query': query})
+        string_render = render_to_string('home/search.html')
+        response_list.append({'template': string_render, 'query': query})
+
         return Response(response_list)
 
     def post(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
 
-def check(request,query ):
+def search_user_profiles(request, query):
+    queryset = User.objects.filter(
+        Q(first_name__icontains=query) |
+        Q(last_name__icontains=query) |
+        Q(username__icontains=query)
+    )
     if request.is_ajax():
-        print("\n\ncalled\n\n")
-        html = render_to_string('home/search.html', {'dishes': "dishes"})
+        html = render_to_string('home/search.html', {'user_list': queryset})
         return HttpResponse(html)
+    else:
+        return render(request, 'home/search.html', {'user_list': queryset})
+
+#
+# def check(request, query):
+#     queryset = User.objects.filter(
+#         Q(first_name__icontains=query) |
+#         Q(last_name__icontains=query) |
+#         Q(username__icontains=query)
+#     )
+#     if request.is_ajax():
+#         html = render_to_string('home/search.html', {'user_list': queryset})
+#         return HttpResponse(html)

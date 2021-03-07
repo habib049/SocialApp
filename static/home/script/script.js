@@ -338,50 +338,15 @@ window.addEventListener('load', (event) => {
     document.getElementById('search-from').addEventListener('submit', (e) => {
         e.preventDefault();
         $.ajax({
-            beforeSend: function (xhr, settings) {
-                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-                }
-            },
             type: 'GET',
-            url: '/search/path/habib',
+            url: '/search/' + $('#searchProfilesInput').val(),
             data: $("#search-from").serialize(),
-            dataType: 'json',
+            dataType: 'html',
             success: function (data) {
-                console.log(data);
-                $('.center').html(data)
-                // let newUrl = "/search/ajax/" + data[data.length - 1].query;
-                //
-                // //changing the url
-                // // window.history.replaceState('', 'Search', newUrl);
-                //
-                // let content = "";
-                //
-                // for (let i = 0; i < data.length; i++) {
-                //     content += `<div class="user-display infinite-item">
-                //             <div class="user-image">
-                //                 <a href="">
-                //                     <img src="${data[i].image_url}" alt="">
-                //                 </a>
-                //             </div>
-                //             <div class="user-info">
-                //                 <div class="username">
-                //                     <a href="">
-                //                         <h6>${data[i].first_name} ${data[i].last_name}</h6>
-                //                     </a>
-                //                 </div>
-                //                     <div class="user-location">
-                //                         <h6>Lives in ${data[i].city}, ${data[i].country}</h6>
-                //                     </div>
-                //             </div>
-                //             <div class="add-friend" id="${data[i].id}">
-                //                 <i class="fas fa-user-plus"></i>
-                //             </div>
-                //         </div>`
-                // }
-                // let centerContent = document.getElementsByClassName('center')[0];
-                // centerContent.innerHTML = content;
-                // centerContent.classList.remove('infinite-container')
+                let newUrl = "/search/" + $('#searchProfilesInput').val()
+                $('.application').html(data)
+                // changing the url
+                window.history.replaceState('', 'Search', newUrl);
             },
             error: () => {
                 alert("error occured")
@@ -389,20 +354,18 @@ window.addEventListener('load', (event) => {
         });
     })
 
-    // document.getElementById('search-from').addEventListener('submit', (e) => {
+    // document.getElementById('btn').addEventListener('click', (e) => {
     //     e.preventDefault();
     //     $.ajax({
-    //         beforeSend: function (xhr, settings) {
-    //             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-    //                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-    //             }
-    //         },
     //         type: 'GET',
-    //         url: '/search/',
-    //         dataType: 'json',
+    //         url: '/search/temp/temp/habib',
+    //         dataType: 'html',
     //         success: function (data) {
-    //             let newUrl = "/search/ajax/" + data[data.length - 1].query;
-    //             window.history.replaceState('', 'Search', newUrl);
+    //             console.log(data)
+    //             $('.application').html(data)
+    //         },
+    //         error: () => {
+    //             alert("error occured")
     //         }
     //     });
     // })
