@@ -25,6 +25,47 @@
                     </div>
                 </div>
                 <div class="contact-section">
+                    {% if first_friend %}
+                        {% if user.username == first_friend.friend.username %}
+                            <div class="contact" id="conversion-{{ first_friend.user.username }}">
+                        {% else %}
+                            <div class="contact" id="conversion-{{ first_friend.friend.username }}">
+                        {% endif %}
+                    <div class="user-profile-image">
+                        <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                    </div>
+                    <div class="right-information">
+                        <div class="upper-information">
+                            <div class="username">
+                                {% if user.username == first_friend.friend.username %}
+                                    <p class="contact-username">{{ first_friend.user.username }}</p>
+                                {% else %}
+                                    <p class="contact-username">{{ first_friend.friend.username }}</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="last-message-time">
+                                {% if first_friend.messages.first.timestamp.date == now.date %}
+                                    <p class="last-message-time-p">{{ first_friend.messages.first.timestamp|time }}</p>
+                                {% else %}
+                                    <p class="last-message-time-p">{{ first_friend.messages.first.timestamp|date }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="last-message">
+                            {% if user.username == first_friend.friend.username %}
+                                <p id="information-{{ first_friend.user.username }}"
+                                >{{ first_friend.messages.first.content }}</p>
+                            {% else %}
+                                <p id="information-{{ first_friend.friend.username }}"
+                                >{{ first_friend.messages.first.content }}</p>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                    </div>
+                    {% endif %}
                     {% for contact in contacts %}
                         {% if user.username == contact.friend.username %}
                             <div class="contact" id="conversion-{{ contact.user.username }}">
@@ -315,54 +356,54 @@
                     </div>
                     </div>
 
-                </div>
-                <div class="right-section">
-                    <div class="info-bar-section">
-
                     </div>
-                    <div class="chatting-section">
-                        <div class="chatting-wrapper ">
-                            <div class="menubar chat-menubar">
-                                <div class="user-profile-image">
-                                    <div class="user-image">
-                                        <img src="\media\profile\default_profile.jpg" alt="user-profile">
+                    <div class="right-section">
+                        <div class="info-bar-section">
 
-                                    </div>
-                                    <div class="username-status-wrapper">
-                                        <div class="username">
-                                            <p id="chatMenuBarUsername">Username</p>
+                        </div>
+                        <div class="chatting-section">
+                            <div class="chatting-wrapper ">
+                                <div class="menubar chat-menubar">
+                                    <div class="user-profile-image">
+                                        <div class="user-image">
+                                            <img src="\media\profile\default_profile.jpg" alt="user-profile">
+
                                         </div>
-                                        <div class="status">
-                                            <p id="user-status"></p>
+                                        <div class="username-status-wrapper">
+                                            <div class="username">
+                                                <p id="chatMenuBarUsername">Username</p>
+                                            </div>
+                                            <div class="status">
+                                                <p id="user-status"></p>
+                                            </div>
                                         </div>
+
                                     </div>
-
-                                </div>
-                                <div class="other-option">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </div>
-                            </div>
-                            <div class="chatting-area-wrapper">
-                                <div class="chatting-area infinite-container" id="chattingArea">
-
-                                </div>
-                            </div>
-                            <div class="chatting-bar">
-                                <form id="messageInputForm">
-
-                                    <div class="input-group mb-2 message-input-wrapper">
-                                        <input type="text" class="form-control" id="messageInput"
-                                               placeholder="Type your message" name="message">
+                                    <div class="other-option">
+                                        <i class="fas fa-ellipsis-v"></i>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="chatting-area-wrapper">
+                                    <div class="chatting-area infinite-container" id="chattingArea">
+
+                                    </div>
+                                </div>
+                                <div class="chatting-bar">
+                                    <form id="messageInputForm">
+
+                                        <div class="input-group mb-2 message-input-wrapper">
+                                            <input type="text" class="form-control" id="messageInput"
+                                                   placeholder="Type your message" name="message">
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <script src="{% static 'chat/script.js' %}"></script>
+            <script src="{% static 'chat/script.js' %}"></script>
 
 
 {% endblock %}

@@ -137,8 +137,7 @@ window.addEventListener('load', (event) => {
                 data: {
                     'friend_name': friendName,
                 },
-
-                url: '/chat/fectch-messages',
+                url: '/chat/messages/fetch-messages',
                 dataType: 'json',
                 success: function (data) {
                     // this is for pagination
@@ -438,7 +437,7 @@ window.addEventListener('load', (event) => {
                 'page': pageNumber,
             },
 
-            url: '/chat/fectch-messages',
+            url: '/chat/messages/fetch-messages',
             dataType: 'json',
             success: function (data) {
                 console.log(data);

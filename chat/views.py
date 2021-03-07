@@ -14,6 +14,7 @@ class Contact(ListView):
     template_name = 'home/chat.html'
 
     def get_queryset(self):
+        print("\n\n main called\n\n")
         query = Room.objects.filter(
             Q(user=self.request.user) | Q(friend=self.request.user)
         ).order_by(
@@ -24,6 +25,50 @@ class Contact(ListView):
             ))
         )
         return query
+
+
+class ContactFriendName(ListView):
+    model = Message
+    paginate_by = 10
+    context_object_name = 'contacts'
+    template_name = 'home/chat.html'
+
+    def get_queryset(self):
+        print("\n\n friend called\n\n")
+        query = Room.objects.filter(
+            Q(user=self.request.user) | Q(friend=self.request.user)
+        ).exclude(
+            Q(user__username=self.kwargs['friend_name'])
+            | Q(friend__username=self.kwargs['friend_name'])
+        ).order_by(
+            'timestamp'
+        ).prefetch_related(
+            Prefetch('messages', queryset=Message.objects.order_by(
+                'timestamp'
+            ))
+        )
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactFriendName, self).get_context_data(**kwargs)
+        query = Room.objects.filter(
+            Q(user__username=self.kwargs['friend_name'])
+            | Q(friend__username=self.kwargs['friend_name'])
+        ).order_by(
+            'timestamp'
+        ).prefetch_related(
+            Prefetch('messages', queryset=Message.objects.order_by(
+                'timestamp'
+            ))
+        ).first()
+
+        context['first_friend'] = query
+        if query is None:
+            friend = User.objects.get(username=self.kwargs['friend_name'])
+            room_object = Room.objects.create(user=self.request.user, friend=friend)
+            context['first_friend'] = room_object
+
+        return context
 
 
 def fetch_messages(request):
