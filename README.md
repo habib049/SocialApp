@@ -1,6 +1,6 @@
 # SocialApp
 ### Simple social application with following technologies
-Django
-Django Channels
-Js Waypoints
-and many other small techs
+1. Django
+2. Django Channels
+3. Js Waypoints
+4. and many other small techs
